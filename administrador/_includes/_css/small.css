@@ -1,0 +1,58 @@
+
+#loginEmp input {
+    width: 250px;
+}
+.boxLogin img {
+    width: 150px;
+
+    font-size: .8rem;
+}
+@media (max-width: 400px) {
+    .tabEnCurso, .tabHistorico {
+        width: 280px;
+    }
+    .aliHeaderEmp button {
+        padding: 5px;
+        font-size: .75rem;
+    }
+    .aliHeaderEmp img {
+        width: 65px;
+    }
+    .aliInfoLic {
+        flex-direction: column;
+        align-items: center;
+    }
+    .contimg img {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 15px;
+    }
+    .headerEmp {
+        width: 70px;
+    }
+}
+
+.backCH {
+    background-size: 50%;
+}
+.contForm {
+    flex-direction: column-reverse;
+}
+.contSesion .part2 img {
+    width: 100px;
+}
+.blurBack2 {
+    height: 40vh;
+    margin: 0;
+    margin-bottom: -20vh;
+    width: 90%;
+    border-radius: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.contSesion, .blurBack, .contForm {
+    height: 60vh;
+}
+.part1 {
+    width: 100%;
+}

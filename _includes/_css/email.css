@@ -1,0 +1,233 @@
+/* - - - - - - - - - - - - - - - 
+CSS para correo 
+Desarrollado por: CAMBIAR
+Para: CAMBIAR
+Fecha: CAMBIAR
+Ultima modificación por: CAMBIAR
+Fecha: CAMBIAR
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ */
+
+
+/* ====== F O N T S ====== */
+@font-face {
+font-family: 'urwdock-blackitalic';
+src:url('../../_fonts/urwdock-blackitalic-webfont.woff') format('woff');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+font-family: 'urwdock-mediumitalic';
+src:url('../../_fonts/urwdock-mediumitalic-webfont.woff') format('woff');
+font-weight: normal;
+font-style: normal;
+}
+
+
+
+/*CSS de correo.php*/
+
+			
+			p { 
+				font-size: .9em; 
+			}
+			
+			#base { 
+				width: 100%; 
+				border: 0; 
+				cellspacing: 0; 
+				cellpadding: 0;
+			}
+
+			.container{
+				align: center;
+				border: 0;
+				cellpadding: 0; 
+				cellspacing: 0;
+			}
+
+/*CSS de correo_contenido.php*/
+
+			#contenido {
+					background-repeat: no-repeat;
+					background-position: top left;
+					background-size: 200px;
+					background-color: #fff;
+				}
+
+			#mensaje_user {
+					vertical-align: bottom;
+					text-align: center !important;
+				}
+				#mensaje_user h2 { 
+					font-family: 'urwdock-blackitalic';
+					color: #1a3c8c;
+					-webkit-font-smoothing: antialiased;
+				}
+				#mensaje_user img {
+				    display: block;
+				    margin: 0 auto;
+				    width: 194px;
+				    height: 125px;
+				    margin-bottom: 120px;
+				    margin-left: 100px;
+				    /* margin-top: -100px; */
+				}
+
+				#mensaje_user span{
+					color: #000000 !important;
+					font-family: 'urwdock-mediumitalic';
+				}
+
+				#mensaje_user a{
+					text-decoration: none;
+				    background-color: yellow;
+				    padding: 21px;
+				    border-radius: 50px;
+				    color: #1a3c8c;
+				    font-family: 'urwdock-mediumitalic';
+				}
+
+
+
+			#mensaje_user_text { 
+				background-color: #eeeeee; 
+				padding: 50px;
+				align: right;
+			}
+			
+				#mensaje_user_text p { 
+					font-family: 'Open Sans'
+					sans-serif; color: #000000;
+				}
+
+				#mensaje_user_text p span { 
+					color: #616161;
+				}
+
+				#mensaje_user_text p a { 
+					color: #616161;
+				}
+			
+			.rows { 
+					padding: 20px 23px 5px 30px; 
+				}
+				table.one { 
+					width: 100%;
+					align: left !important; 
+				}
+				table.duo { 
+					width: 40%; 
+					align: left !important;
+				}
+				table.tri { 
+					width: 30%; 
+				}
+				table.tri_2 { 
+					width: 60%;
+					align: left !important; 
+				}
+				table.cuart { 
+					width: 20%; 
+				}
+				
+				table.duo img { 
+					width: 40%; 
+				}
+					table.tri img { 
+						width: 100%; 
+					}
+					table.cuart img { 
+						width: 100%; 
+					}
+			
+			
+			.header {}
+			
+			.footer_admin {
+					padding: 10px 20px 10px 30px;
+					background-color: #ffffff;
+					border-top: none; 
+					text-align: center;
+					font-size: 1em;  
+				}
+
+			.footer_user {
+					padding: 10px 20px 10px 30px;
+					border-top: none; 
+					text-align: center;
+					font-size: 1em;  
+				}
+
+				img#logo {
+    				width: 30%;
+    				margin-top: 40px;
+    				margin-bottom: 40px;
+				}
+			
+			@media only screen and (max-width: 980px) {
+
+					table.duo{ 
+						width:100% !important; 
+					}
+					table.tri_2{ 
+						width:100% !important; 
+					}
+				}
+				
+			@media only screen and (max-width: 660px) {
+
+				table.container { 
+					width:480px !important;
+				}
+				td#logo img { 
+					display:none;
+				}
+				td#logo { 
+					height:80px; 
+				}
+				table.duo{ 
+					width:100% !important;
+				}
+				table.tri{ 
+					width:100% !important; 
+				}
+				table.tri_2{ 
+					width:100% !important; 
+				}
+				table.cuart{ 
+					width:100% !important; 
+				}
+				td { 
+					width:100% !important; 
+				}
+				.descripcion { 
+					text-align:justify; font-size:1.1em; 
+				}
+				.td_photo { 
+					display:none; 
+				}
+				#mensaje { 
+					margin:20px !important; 
+				}
+				.footer p { 
+					font-size:.7em !important; 
+				}
+				#circle { 
+					display:block; 
+					margin:0px auto 0px auto; 
+				}
+			}
+			
+			@media only screen and (max-width: 510px) {
+				table.container { 
+					width:100% !important; 
+				}	
+
+				table.container td { 
+					border:none !important; 
+				}
+				td#logo { 
+					height:70px; 
+				}
+			}

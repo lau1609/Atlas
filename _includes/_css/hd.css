@@ -1,0 +1,38 @@
+/* - - - - - - - - - - - - - - - 
+CSS para pantallas 1600px
+Desarrollado por: CAMBIAR
+Para: CAMBIAR
+Fecha: CAMBIAR
+Ultima modificación por: CAMBIAR
+Fecha: CAMBIAR
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ */
+
+#nav-header {
+    margin-right: 90px;
+}
+
+.ct1-text a {
+    width: 13%;
+}
+
+.ct3-text {
+    color: white;
+    font-size: 1.3em;
+    min-height: 400px;
+}
+
+.contacto_container1_informacion {
+    width: 20%;
+    font-size: 1.3em;
+}
+
+.ct7 {
+    background-image: url(../../_images/fondo_formulario.jpg);
+    background-size: cover;
+    width: 100%;
+    background-position: center;
+}
+
+.container_textarea button {
+    width: 27%;
+}

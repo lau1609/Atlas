@@ -1,0 +1,208 @@
+/* - - - - - - - - - - - - - - - 
+CSS para pantallas medianas (Tablets)
+Ultima modificación por:
+Fecha:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ */
+header {
+    overflow: hidden;
+    transition: max-height .5s, background-color .5s;
+    height: 80px;
+    display: block;
+    justify-content: space-between;
+    border-bottom: 1px solid #f9f9f9;
+    background-color: #24272A;
+    padding: 0px 35px;
+    z-index: 1;
+    padding-right: 0px;
+}
+        header.opened {
+		    max-height: 1000px;
+		    transition: max-height .5s, background-color .5s;
+		    height: 600px;
+		    padding-left: 0px;
+		}
+        #menu_btn {
+		    content: url(../../_images/burguer.svg);
+		    position: absolute;
+		    z-index: 10;
+		    right: 40px;
+		    top: 22px;
+		    height: 30px;
+		    width: 30px;
+		}
+            header.opened #menu_btn { content:url('../../_images/icono_cerrar_white.svg'); }
+                #nav-header a {
+				    color: white;
+				    padding: 10px;
+				    font-family: 'urwdock-mediumitalic';
+				    transition: 1s;
+				    display: block;
+				}
+
+				#nav-header {
+				    margin-top: 100px;
+				    margin-right: 0px;
+				    font-size: 2em;
+				    text-align: center;
+				}
+
+				#nav-header a:hover {
+				    color: yellow;
+				    border-bottom: none;
+				}
+
+.logo {
+    display: block;
+    width: 80px;
+    /* margin: 50px; */
+    margin-top: 10px;
+}
+
+.none{
+	display: none;
+}
+
+.ct1 {
+    display: block;
+    background-image: url(../../_images/fondo_responsivo.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 110%;
+    width: 100%;
+    position: relative;
+    top: -75px;
+    z-index: -1;
+}
+
+.ct1-text {
+    left: 58%;
+    position: absolute;
+    top: 49%;
+    transform: translate(-50%, -50%)!important;
+    -webkit-transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    width: 74%;
+    z-index: -1;
+    display: block;
+    font-size: 2em;
+}
+
+.ct1-text h1{
+    font-size: 2em;
+    text-transform: uppercase;
+    margin: 0px;
+    width: 82%;
+}
+
+.ct1-text h2 {
+    font-size: 2em;
+    margin-bottom: 30px;
+    margin-top: 0px;
+    /* width: 130%; */
+    margin-left: -8px;
+    width: 82%;
+}
+
+.ct1-text a{
+	display: none;
+}
+
+.ct3-box {
+    width: 50%;
+    height: max-content;
+}
+
+.ct3-info {
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px 15px 13px;
+    /* margin: 20px 0px; */
+    font-family: 'urwdock-semibolditalic';
+    height: 100px;
+}
+
+.ct4 h2 {
+    display: flex;
+    margin: 0px auto;
+    width: 68%;
+    font-family: 'urwdock-medium';
+    font-size: 1.5em;
+    font-weight: lighter;
+}
+
+.ct5 div {
+    width: 36%;
+    padding: 53px;
+}
+.popupContent p{
+    font-size: medium;
+ }
+ .popupBody{
+	width: 90%;
+	top: 25%;
+}
+
+
+.ct6 div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.ct6 div p {
+    width: 26.3%;
+}
+
+.ct7 {
+    background-image: url(../../_images/fondo_formulario.jpg);
+    background-size: cover;
+    width: 100%;
+}
+
+.ct7-form {
+    flex-direction: column-reverse;
+}
+
+.contacto_container1_informacion {
+    width: 90%;
+    margin: 0px auto;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.5em;
+}
+
+.contacto_container1_form {
+    width: 90%;
+    margin-right: -200px;
+    margin: 0px auto;
+}
+
+#mouse-icon {
+        z-index: -1;
+    }
+
+    input, textarea{
+        border-radius: 0px;
+    }
+
+    .ct8 {
+        display: block;
+    }
+
+    .ct8 iframe{
+        width: 100% !important;
+    }
+
+    .ct8 div {
+        display: none;
+    }
+
+    .ct8 div {
+    width: 50%;
+    background-image: url(../../_images/fachada.jpg);
+    background-repeat: no-repeat;
+    display: block;
+    background-position: 30%;
+    background-size: cover;
+}

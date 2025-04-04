@@ -1,0 +1,44 @@
+@media (max-width: 900px) {
+    .header {
+        top: 0;
+    }
+    .contLI {
+        margin-left: 0px;
+        align-items: end;
+        height: auto;
+    }
+    .contInfoGen div {
+        font-size: .85rem;
+    }
+    .contQuestVehi {
+        width: 100%;
+    }
+    .noteSoli p {
+        width: 80%;
+    }
+}
+.contSesion {
+    width: 95%;
+}
+
+.blurBack {
+    width: 90%;
+}
+.blurBack2 {
+    width: 45%;
+    margin-right: -45%;
+}
+@media (max-width: 700px) {
+    .contLI{flex-direction: column;}
+    #contLinks, #contImage{width: 100% !important; }
+
+    .contInfoGen div {
+        width: 100%;
+    }
+    .noteInfo p {
+        font-size: .85rem;
+    }
+    #closeImg {
+        width: 33px;
+    }
+}

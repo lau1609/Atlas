@@ -1,0 +1,99 @@
+/* - - - - - - - - - - - - - - - 
+Desarrollado por: Upgrade Diseño Interactivo
+Para: 
+Fecha: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ */
+
+
+
+/* HEADER */
+.logo {
+    width: 75%;
+	padding: 40px 12px;
+}
+
+a.a-header {
+	font-size: 1.5rem;
+}
+
+/* ------- index -------- */
+
+.texto h1 {
+	font-size: 3.5rem;
+	margin-top: -33%;
+}
+
+.three-box h3 {
+    font-size: 2.5rem;
+}
+
+.ic1, .ic2, .ic3{
+    margin-top: -24.5%;
+}
+
+p.text {
+    font-size: 1.5rem;
+}
+
+.cont-us {
+    width: 90%;
+}
+
+.text-white p {
+    font-size: 1.5rem;
+}
+
+.text-white h3 {
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+h1.us-tit, .cont-serv h1 {
+    font-size: 3.3rem;
+}
+
+.three-box p {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.three-box:hover {
+    height: 380px;
+}
+
+.three-box {
+    height: 380px;
+}
+
+
+@media only screen and (max-width: 1800px) {
+
+    .three-box:hover {
+        height: 330px;
+    }
+    
+    .three-box {
+        height: 330px;
+    }
+
+    .ic1, .ic2, .ic3 {
+        margin-top: -430px;
+    }
+
+  }
+
+
+/* FOOTER */
+
+.upgrade {
+	width: 30%;
+}
+
+.box-green {
+    width: 55%;
+}
+
+.mapa, iframe{
+    height: 560px;
+}

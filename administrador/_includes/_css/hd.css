@@ -1,0 +1,908 @@
+/* - - - - - - - - - - - - - - - 
+CSS principal
+Desarrollado por: Upgrade Diseño Interactivo
+Para: 
+Fecha: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ */
+
+/* ====== F O N T S ====== */
+
+
+  @font-face {
+    font-family: 'PublicSans';
+    src: url('../../_fonts/PublicSans-Regular.woff') format('woff');
+    font-style: normal;
+}
+
+/* ====== F O N T S (end) ====== */
+
+
+/*Eliminamos márgenes del "body" */
+a { text-decoration: none; }
+
+html, body{ margin:0px; padding:0px; height:100%; }
+
+header{
+    background: #95B422;
+    height: auto;
+}
+
+/* ---------- ANIMACIONES ------------ */
+
+@keyframes send {
+    from {
+      
+      transform:
+    skewX(0deg)
+    translateX(0px);
+  opacity: 1;
+  }
+    to {
+    
+      transform:
+    skewX(-20deg)
+    translateX(300px);
+  opacity: 0;
+  }
+}
+
+/* ------------------------------------ */
+.pointer{
+    cursor: pointer;
+}
+.link{
+    color: cornflowerblue;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-decoration: underline;
+}
+body{
+    background-color: white !important;
+    font-family: 'PublicSans';
+    margin: 0;
+}
+.none{
+    display: none !important;
+}
+
+/* ----------------------------------------------- */
+
+/* ------------- HOVERS ------------------------ */
+.zoom:hover{      
+    transform: scale(1.1);
+    transition: .3s;
+}
+.colorYellow:hover{
+    background-color: rgba(248, 186, 0, 255) !important;
+    transition: .5s;
+}
+#formAddAtrac input:focus-visible, #formAddAtrac textarea:focus-visible,
+#formAddImg input:focus-visible,#formAddImg select:focus-visible, #formAddImg textarea:focus-visible,
+#formEditMuni input:focus-visible, #formEditMuni textarea:focus-visible,
+#formEditImage input:focus-visible, #formEditImage textarea:focus-visible,
+#formEditAtrac input:focus-visible, #formEditAtrac textarea:focus-visible{
+    outline: none;
+    /* border: 1px solid rgba(112, 36, 119, .3); */
+    border-bottom: 2px solid rgba(112, 36, 119, 255);
+    transition: .4s;
+}
+#formAddAtrac input::placeholder, #formAddAtrac textarea::placeholder
+#formAddImg input::placeholder, #formAddImg textarea::placeholder,
+#formEditMuni input::placeholder, #formEditMuni textarea::placeholder
+#formEditImage input::placeholder, #formEditImage textarea::placeholder
+#formEditAtrac input::placeholder, #formEditAtrac textarea::placeholder{
+    color: rgb(41,155,21,.5);
+}
+/* .__lk-fileInput span{
+    background: #2683E1;
+} */
+.__lk-fileInput.withFile::after{
+    content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QTA5OEU0M0REOUIwMTFFMzg4Q0VDNDEwMTU1QkU0MUIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QTA5OEU0M0VEOUIwMTFFMzg4Q0VDNDEwMTU1QkU0MUIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBMDk4RTQzQkQ5QjAxMUUzODhDRUM0MTAxNTVCRTQxQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBMDk4RTQzQ0Q5QjAxMUUzODhDRUM0MTAxNTVCRTQxQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PolX3bIAAADWSURBVHjadNHNCkFBFMDxSYq9UsoCC4/gZqFEiXLZSKy8nJ2Pja6FB1A8i/KRuEjXfzSXY3DqV3Nnzpx7TqOCIMhjgAkSUJYkRugjG1VKFeGiBgdz9RmOObvgWWEWvOOMlqiu1745u2OsN9No42YOLqigbNbhXgMp2WsdW5NwE8kbVMM8e8ASrlaLjsyJWAPG1HfEP77+DOiLlo6m3VdLOXRFK3qOAoo4iAIdZPQFT/R8ktXQFH/VMVXmlfVL7qzkkIs9hujpl16G42D9Y+gVFvD0+iHAAMR9gu9PEii4AAAAAElFTkSuQmCC');
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+/* --------------------------------------------- */
+.width-30{
+    width: 150px !important;
+}
+.contMain {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.header {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    background-color: rgb(95,122,42,100);
+    height: 100vh;
+    margin-right: 15px;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+}
+.contLI{
+    margin-left: 80px;
+    height: 100vh;
+}
+    .abrir {
+    display:block;
+}
+.contHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 25px;
+    height: 100%;
+}
+.toggleMenu {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.toggle-button {
+    display:block;
+    width:50px;
+    height:50px;
+    /* border:1px solid white; */
+    position:relative;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+input#abrir-cerrar:checked + .toggle-button .abrir {
+    display:none;
+}
+    input#abrir-cerrar:checked + .toggle-button .cerrar {
+    display:block;
+}
+    input#abrir-cerrar:checked + .toggle-button:before, input#abrir-cerrar:checked + .toggle-button:after {
+    top:calc(100% / 2);
+    height:1px;
+    border-bottom:0;
+}
+    input#abrir-cerrar:checked + .toggle-button:before {
+    transform: rotate(45deg); 
+}
+    input#abrir-cerrar:checked + .toggle-button:after {
+    transform: rotate(-45deg);
+}
+input#abrir-cerrar { 
+    visibility:hidden;
+    position: absolute;
+    top: -9999px;
+}
+.toggle-button:before, .toggle-button:after {
+    position:absolute;
+    display:block;
+    content:" ";
+    width: calc(100% / 2);               
+    box-sizing: border-box;
+    left: calc(100% / 4);
+    transition: all 0.2s ease-out;
+}
+    .toggle-button:before {
+    top: calc(100% / 4);
+    height:calc(100% / 4);
+    border-top:2px solid white;
+    border-bottom:2px solid white;
+    background-color: transparent;
+}
+    .toggle-button:after {
+    height:2px;
+    background-color:white;
+    bottom:calc(100% / 4);
+}
+.flecImg{
+    margin-top: 0 !important;
+    margin-left: 5px;
+}
+input#abrir-cerrar:checked + .toggle-button .abrir {
+    display:none;
+}
+    input#abrir-cerrar:checked + .toggle-button .cerrar {
+    display:block;
+}
+    input#abrir-cerrar:checked + .toggle-button:before, input#abrir-cerrar:checked + .toggle-button:after {
+    top:calc(100% / 2);
+    height:1px;
+    border-bottom:0;
+}
+    input#abrir-cerrar:checked + .toggle-button:before {
+    transform: rotate(45deg); 
+}
+    input#abrir-cerrar:checked + .toggle-button:after {
+    transform: rotate(-45deg);
+}
+.cerrar {
+    display:none;
+}
+.select-box .selected {
+    flex: 1;
+}
+.select-box .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1;
+    max-height: 200px; /* Ajusta la altura máxima del desplegable */
+    overflow-y: auto; /* Agrega un scroll si hay muchas opciones */
+    width: 150px;
+}
+.custom-select-container {
+    position: relative;
+    width: 200px;
+}
+
+.custom-select-container {
+    position: relative;
+    width: auto;
+}
+.select-box .dropdown.show {
+    display: block;
+}
+.select-box .dropdown label {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+}
+.select-box .dropdown label:hover {
+    background-color: #f0f0f0;
+}
+#contImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height:100%;
+}
+.abrir, .cerrar { 
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    text-indent: -9999px;
+}
+.titleMain{
+    text-align:center;
+    color: white;
+    margin:0;
+    padding: 0 10px;
+    font-size: 1.5rem;
+}
+.opcMenu{
+    cursor:pointer;
+    color:white;
+    font-weight: 500;
+    text-align: center;
+    font-size: .95rem;
+    margin: 8px 0;
+}
+.contVehi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+p.opcVehi, a.opcVehi {
+    margin: 5px 0;
+    color: rgb(210, 176, 244);
+    font-size: .9rem;
+}
+
+/* ---------------- INICIO ----------------- */
+.aliIni{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+div#saludo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(95, 122, 42, .1);
+    padding: 25px 0;
+    flex-direction: column;
+    color: rgb(47, 157, 213);
+}
+#saludo h3{
+    margin-left: 120px;
+    font-size: 1.7rem;
+    margin-bottom: 0;
+}
+.inicio {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: 85vh;
+}
+#saludo span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-left: 120px;
+}
+.contIni{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --size: 60%;
+    background-image: url(../../_images/fadmin.jpg);
+    /* --gradient: linear-gradient(#002D72, #477BCA); */
+    /* background: var(--gradient); */
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50% 0 50% 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.contIni::before{
+    --gradient: linear-gradient(rgb(95,122,42,1), rgb(95,122,42,.5));
+    background: var(--gradient);
+    content: '';
+    position: absolute;
+    --size: 60%;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50% 0 50% 0;
+}
+.contIni h3{
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: end;
+    width: 400px;
+    padding-right: 20px;
+    /* box-shadow: 0px 0px 7px rgb(71, 123, 202); */
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+/* -------- inicio de sesion ---------- */
+#sesion{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(95,122,42,100);
+}
+.contSesion{
+    padding: 35px 15px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    z-index: 2;
+}
+.contSesion img{
+    margin-bottom: 30px;
+}
+.contForm{
+    width: 90%;
+    height: 45vh;
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    align-items: center;
+}
+.contSesion form{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#iniSesion input{
+    border-style: none;
+    border: none;
+    color: #545859;
+    border: 1px solid rgb(154,189,28,100);
+    font-size: 1rem;
+    width: 95%;
+    padding: 6px;
+    outline: none;
+    border-radius: 7px;
+    background: rgb(255, 255, 255, .5);
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+#iniSesion input::placeholder{
+    color: rgb(84, 88, 89,50%);
+    font-size: 1rem;  
+}
+#iniSesion input:focus{
+    border: 1px solid rgb(255,255,255,100);
+    transition: .3s;
+}
+#iniSesion button{
+    border-style: none;
+    color: white;
+    background-color: rgb(95,122,42,100);
+    border-radius: 6px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+#iniSesion button:hover{
+    box-shadow: 1px 1px 1px rgb(0,0,0,.5);
+}
+.contMenuIni img{
+    margin-top: 35px;
+    width:40px;
+}
+.contMenuIni{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.blurBack{
+    height: 50vh;
+    width: 100%;
+    width: 50%;
+    position: absolute;
+    background: rgb(255, 255, 255, .4);
+    backdrop-filter: blur(4px);
+    z-index: 1;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0, .5);
+    border: 1px solid rgb(0, 0, 0, .2);
+}
+.contInput {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+#iniSesion{
+    z-index: 1;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contInput svg {
+    width: 30px;
+    background: white;
+    border: none;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    padding: 2.5px;
+}
+.blurBack2{
+    height: 50vh;
+    width: 25%;
+    position: absolute;
+    background: rgb(255, 255, 255, .4);
+    backdrop-filter: blur(4px);
+    z-index: 1;
+    border-radius: 8px;
+    margin-right: -25%;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.part1, .part2 {
+    position: relative;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.backCH{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../_images/_svg/fondoCh.svg);
+    background-position: center;
+    background-repeat: repeat;
+    background-size: 20%;
+}
+svg#closeSesion {
+    fill: rgb(47,157,213);
+    width: 45px;
+    margin-top: 45px;
+}
+
+/* ---------- ATRACTIVOS TURISTICOS ------------ */
+.contAtrac,  .contMuni, .contImage{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+}
+.ellipsis{
+    display: inline-block;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.contButAtrac {
+    /* margin-left: 120px; */
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-top: 40px;
+}
+#addAtrac, #addImage {
+    border-style: none;
+    padding: 10px 20px;
+    background: rgb(47, 157, 213);
+    color: white;
+    margin-right: 4%;
+}
+.conttabAtrac, .conttabMuni, .conttabImage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    align-items: center;
+}
+.svgStat{
+    width: 30px;
+}
+
+table#tabIndTuris, #tabMunis, #tabImages {
+    margin-left: 120px;
+    margin-right: 2%;
+    border-collapse: collapse;
+    background-color: rgba(154, 189, 28, .06);
+    width: 90%;
+    margin-top: 35px;
+}
+.title th, td {
+    padding: 6px;
+    color: rgb(0, 0, 0, .75);
+}
+td {
+    font-size: .9rem;
+    text-align: center;
+    border-top: 2px solid rgb(255, 255, 255);
+}
+caption {
+    font-weight: 600;
+    text-align: center;
+    padding: 11px;
+    color: white;
+    font-size: 1.05rem;
+    background-color: rgba(154, 189, 28, 255);
+}
+.editAtrac, .editMuni, .editImage{
+    color: rgba(218, 13, 21, 255);
+    font-weight: 900;
+}
+
+/* ----- pop up de agregar atractivos turisticos ------ */
+.popAtractivos {
+    width: 100%;
+    position: absolute;
+    background-color: rgb(0, 0, 0, .3);
+    height: 100vh;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contMessSave{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contMessSave p{
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: rgb(41, 155, 21, .8);
+}
+.contFieldset {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.contAtractivo {
+    width: 60%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    flex-direction: column;
+    box-shadow: 0px 0px 12px rgb(0, 0, 0, .6);
+    height: 75vh;
+}
+.contAtractivo h3 {
+    width: 85%;
+    color: rgba(112, 36, 119, 255);
+    font-weight: 900;
+}
+form#formAddAtrac, #formEditAtrac, #formEditMuni, #formEditImage, #formAddImg {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: scroll;
+    /* height: 70vh; */
+}
+
+#formAddAtrac input, #formAddAtrac select,#formAddAtrac textarea ,
+ #formAddImg input, #formAddImg select,#formAddImg textarea{
+/*#formEditImage input, #formEditImage select,#formEditImage textarea, 
+#formEditMuni input, #formEditMuni select,#formEditMuni textarea,
+#formEditAtrac input, #formEditAtrac select,#formEditAtrac textarea { */
+    width: 45%;
+    border: none;
+    margin-bottom: 40px;
+    /* border: 1px solid rgba(248, 186, 0); */
+    border-bottom: 2px solid rgb(41,155,21,.5) ;
+    color: rgb(41, 155, 21, .5);
+    padding: 12px 6px;
+}
+.contImgClose{
+    width: 90%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 35px;
+}
+.contImgClose img{
+    width: 40px;
+}
+#formAddAtrac input[type="file"], 
+#formEditImage input[type="file"],
+#formEditMuni input[type="file"],
+#formEditAtrac input[type="file"] {
+    border: none;
+    width: 300px;
+    margin: 0;
+    padding: 0;
+}
+input[type="submit"]{
+    width: auto;
+    padding: 8px 25px;
+    border: none !important;
+    background: rgb(47, 157, 213);
+    color: white !important;
+    margin-top: 35px;
+}
+.contButSub{
+    width: 90%;
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+}
+#formAddAtrac label {
+    display: flex;
+    justify-content: space-between;
+    width: 45%;
+    margin-bottom: 25px;
+}
+/* #formAddAtrac input, #formAddAtrac select, #formAddAtrac label {
+color: rgb(0, 0, 0, .8);
+} */
+fieldset {
+    width: 45%;
+    border-color: rgba(41, 155, 21, 0.5);
+}
+
+legend {
+    color: rgba(41, 155, 21, 0.5);
+}
+
+.__lk-fileInput {
+    cursor: pointer;
+}
+
+.__lk-fileInput input {
+    display: none;
+}
+
+.__lk-fileInput span {
+    color: #fff;
+    margin: 0 0 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    background: rgba(112, 36, 119, 0.8);
+    border-radius: 2px;
+    font: normal 14px/1.412 Helvetica;
+}
+
+#file-list {
+    list-style: none;
+    padding: 0;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    background: #f3f3f3;
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.file-item span {
+    flex: 1;
+}
+
+.file-item .remove-file {
+    /* background: red; */
+    color: white;
+    border: none;
+    padding: 3px 6px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.spanPort{
+    color: #fff;
+    margin: 0 0 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    background: #418edb;
+    border-radius: 2px;
+    font: normal 14px/1.412 Helvetica;
+}
+.withFile:after{
+    content: '❌';
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+    
+  
+  .spanPort:hover{
+    background: #2683E1;
+  }
+
+  /* ------------- POP DE EDITAR ------------ */
+  .aliPopEdit{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+  }
+  .contPopEdit{
+    width: 45%;
+    height: 100%;
+    overflow: scroll;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  #formEditAtrac input, #formEditAtrac textarea, #formEditAtrac select, 
+  #formEditMuni input, #formEditMuni textarea, #formEditMuni select,
+  #formEditImage input, #formEditImage textarea, #formEditImage select {
+    width: 98%;
+    margin-bottom: 20px;
+    border-style: none;
+    border: 1px solid rgb(0, 0, 0, .1);
+    padding: 9px 1px;
+}
+#formEditAtrac label, #formEditMuni label, #formEditImage label {
+    width: 100%;
+    color: rgb(41, 155, 21, .5);
+    font-weight: 900;
+}
+.contPopEdit h3{
+    color: rgb(47, 157, 213);
+    font-size: 1.5rem;
+    margin-top: 0;
+
+}
+.sendEditAtrac, .sendEditMuni, .sendEditImage {
+    background-color: rgb(47, 157, 213);
+    color: white;
+    width: 100px !important;
+    margin-top: 25px;
+    border-style: none;
+}
+.contPopEdit .contImgClose{
+    margin: 20px 0;
+}
+.contEditImage{
+    background-color: rgb(0,0,0,.1);
+    padding: 15px 0;
+    justify-content: center;
+    align-items: center;
+}
+.contEditImage img{
+    width: 90%;
+}
+
+.contImgGalery, .contImgPort, .contEditImage {
+    width: 98%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid rgb(0, 0, 0, .1);
+}
+.contImgGalery img {
+    width: 37%;
+    margin: 15px;
+}
+.contImgPort img{
+    height: 200px;
+    margin: 15px;
+}
+button#addEditGal, #addEditPort, #addEditImg {
+    width: 50%;
+    border-style: none;
+    padding: 12px 0;
+    margin: 15px;
+    background: rgba(112, 36, 119, .86);
+    color: white;
+}
+.contImgGalery p, .contImgPort p {
+    margin: 15px;
+}
+.alignEditImage{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+.alignEditImage button{
+    width: 100px !important;
+}
+.popValidation {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0, 0, 0, .2);
+}
+.aliPopVali {
+    width: 30%;
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+.contPopDel {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.messPop {
+    text-align: center;
+}
+.contButDel{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
+}

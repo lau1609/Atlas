@@ -1,0 +1,323 @@
+.section-principal {
+    background-color: #299BD7;
+    color: white;
+    position: relative;
+    text-align: center;
+    padding: 100px 20px;
+    overflow: hidden;
+}
+
+.section-principal .background-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.section-principal .content {
+    position: relative;
+    z-index: 2;
+}
+
+.section-principal img {
+    
+    margin-bottom: 20px;
+}
+
+/* Oscurecer la imagen del banner */
+.banner-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5); /* Oscurecimiento al 50% */
+z-index: 1;
+}
+
+.card_anim {
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.card_anim:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+/* texto sobre la pleca oscura */
+.carousel-caption {
+z-index: 2;
+color: white;
+}
+
+/* Animación Zoom In */
+.zoom-in {
+animation: zoomIn 6s ease-in-out infinite alternate;
+}
+
+@keyframes zoomIn {
+0% {
+    transform: scale(1);
+}
+100% {
+    transform: scale(1.1);
+}
+}
+
+footer h5 {
+font-weight: bold;
+color: #6D6D6D;
+}
+
+footer p,
+footer ul li {
+font-size: 14px;
+color: #6D6D6D;
+}
+
+footer a {
+color: #6D6D6D;
+transition: color 0.3s ease;
+}
+
+footer a:hover {
+color: #000;
+}
+
+/* engrosar HR */
+.custom-hr {
+    height: 5px; /* Grosor del <hr> */
+    background-color: #000; /* Color del <hr> */
+    border: none; /* Sin bordes */
+    width: 60%; /* Ancho del 60% */
+    margin: 0 auto; /* Centrar horizontalmente */
+  }
+
+  .carousel-section {
+    background-size: cover;
+    background-position: center;
+    color: white;
+  }
+  
+  .card {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 15px;
+  }
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    filter: invert(1); /* Hace las flechas blancas */
+  }
+  
+  .titulo-reg {
+    font-size: 3rem;
+  }
+
+  .carousel-item {
+    transition: transform 1s ease, opacity 2s ease !important;
+  }
+
+  .carousel-container {
+      background: url('_images/fondo_barrancas.jpg') no-repeat center center;
+      background-size: cover;
+      padding: 40px 0;
+  }
+  .carousel-item img {
+      width: 100%;
+      border-radius: 10px;
+  }
+  .carousel-control-prev, .carousel-control-next {
+      width: 5%;
+  }
+
+  .slick-carousel .card {
+    margin: 0 20px; /* Espacio entre tarjetas */
+}
+
+@media (max-width: 768px) {
+    .slick-carousel .card {
+        margin: 0 10px; /* Reduce el margen en pantallas pequeñas */
+    }
+}
+
+.slick-carousel .card {
+  margin: 0 15px; /* Margen de 15px a la izquierda y derecha */
+}
+
+.gallery img {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.gallery img:hover {
+  transform: scale(1.05); /* Hace zoom al 105% */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Agrega una sombra más fuerte */
+}
+
+.img-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.img-container img {
+  display: block;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.img-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Pleca oscura */
+.img-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.img-container:hover::before {
+  opacity: 1;
+}
+
+/* Contenido del overlay */
+.overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.img-container:hover .overlay-content {
+  opacity: 1;
+}
+
+.overlay-content img {
+  width: 50px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.overlay-content p {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Hover del Carrusel - letras*/
+
+.carousel-caption h2:hover {
+  color: #FFD700; /* Color dorado */
+  transition: color 0.3s ease-in-out;
+}
+
+.carousel-caption p:hover {
+  color: #FFA500; /* Color naranja */
+  transition: color 0.3s ease-in-out;
+}
+
+ /* Quitamos el flex del body */
+ body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header, footer {
+  width: 100%;
+  background: #f0f0f0;
+}
+
+/* Ahora el main es el que maneja la fila del sidebar y el mapa */
+main {
+  display: flex;
+  height: calc(100vh - 100px); /* Ajusta según la altura de tu header/footer */
+}
+
+#sidebar {
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#map {
+  flex: 1;
+  height: 100vh;
+}
+
+.form-check-label {
+  margin-left: 5px;
+}
+
+.btn-success {
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.info-box {
+  background: white; 
+  padding: 10px; 
+  border-radius: 5px;
+}
+.info-box img {
+  width: 100%; 
+  border-radius: 5px;
+}
+.info-box a {
+  display: block; 
+  margin-top: 10px; 
+  padding: 5px; 
+  text-align: center; 
+  text-decoration: none;
+}
+.btn-green {
+  background: #73c42c; 
+  color: white !important;
+}
+
+.carrusel-atrac {
+  background-repeat: repeat; 
+  background-color: #5C7812; 
+  background-blend-mode: overlay; /* Mezcla el color con el SVG */
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-in-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+

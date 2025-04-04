@@ -1,0 +1,41 @@
+
+
+@media (max-width: 1200px) {
+    #tabPresEmpEC td, .titleHistory td {
+        font-size: .85rem;
+    }
+    .titleEmp th,.titleHistory th {
+        font-size: .9rem;
+    }
+    .contInfoEmp h3 {
+        font-size: 1rem;
+    }
+    #tabPresHistory caption, #tabPresEmpEC caption {
+        font-size: 1rem;
+    }
+    .aliHeaderEmp img {
+        width: 95px;
+    }
+    .headerEmp {
+        width: 100px;
+    }
+    .contimg {
+        width: 100px;
+    }
+    p.closePrestamo {
+        width: 90px;
+    }
+    .contempleados {
+        margin-left: 100px;
+    }
+    .contimg img {
+        width: 35px;
+        height: 35px;
+    }
+    .aliInfoEmp {
+        height: 90vh;
+        overflow: overlay;
+        justify-content: flex-start;
+    }
+   
+}

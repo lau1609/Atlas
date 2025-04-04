@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+/* [ ------ T E X T F I E L D ------] */
+ 
+	/* ESTATUS: OK */ 
+	.textfieldValidState input, input.textfieldValidState { color:#42923d !important; }
+	
+	
+	/*  Mensajes en estatus Pendiente*/ 
+	.textfieldRequiredMsg, .textfieldInvalidFormatMsg, .textfieldMinValueMsg, .textfieldMaxValueMsg, .textfieldMinCharsMsg, .textfieldMaxCharsMsg, .textfieldValidMsg { display: none; }
+	
+	/* Requerido */
+	.textfieldRequiredState .textfieldRequiredMsg, .textfieldInvalidFormatState .textfieldInvalidFormatMsg,  .textfieldMinValueState .textfieldMinValueMsg, .textfieldMaxValueState .textfieldMaxValueMsg, .textfieldMinCharsState .textfieldMinCharsMsg, .textfieldMaxCharsState .textfieldMaxCharsMsg { display: block; color: #F32125; }
+	
+	/* Invalido */
+	input.textfieldRequiredState, .textfieldRequiredState input, input.textfieldInvalidFormatState, .textfieldInvalidFormatState input, input.textfieldMinValueState, .textfieldMinValueState input, input.textfieldMaxValueState, .textfieldMaxValueState input,  input.textfieldMinCharsState, .textfieldMinCharsState input, input.textfieldMaxCharsState, .textfieldMaxCharsState input { color: #F87073; border-bottom:#F32125 solid thin; }
+	
+	
+	/* En "Focus". */
+	.textfieldFocusState input, input.textfieldFocusState { color:#AAA; }
+	
+	/* HINT */
+	.textfieldHintState input, input.textfieldHintState { font-size:.8em !important; font-weight:200; color:#888 !important; }
+	
+/* [ ------ T E X A R E A ------] */
+
+	/* ESTATUS: OK */ 
+	.textareaValidState textarea, textarea.textareaValidState { color:#42923d !important; }	
+	
+	/*  Mensajes en estatus Pendiente*/ 
+	.textareaRequiredMsg,
+	.textareaMinCharsMsg,
+	.textareaMaxCharsMsg,
+	.textareaValidMsg { display:none; }
+	
+	/* Requerido */
+	.textareaRequiredState .textareaRequiredMsg,
+	.textareaMinCharsState .textareaMinCharsMsg,
+	.textareaMaxCharsState .textareaMaxCharsMsg { display: block; color: #F32125; }
+	
+	/* Invalido */
+	textarea.textareaRequiredState, .textareaRequiredState textarea, 
+	textarea.textareaMinCharsState, .textareaMinCharsState textarea, 
+	textarea.textareaMaxCharsState, .textareaMaxCharsState textarea { color: #F87073; border-bottom:#F32125 solid thin; }
+	
+	/* Cambios */
+	.textareaFlashState textarea, textarea.textareaFlashState{ color: #F87073 !important; }
+	
+	/* En "Focus". */
+	.textareaFocusState textarea, textarea.textareaFocusState { color: #AAA; }
+	
+	/* HINT */
+	textarea.textareaHintState, .textareaHintState textarea{ font-size:.8em !important; font-weight:200; color:#888 !important; }
+	
+/* [ ------ S E L E C T ------] */
+
+	/* ESTATUS: OK */ 
+	.selectValidState select, select.selectValidState { color: #42923d !important; }
+
+	/*  Mensajes en estatus Pendiente*/ 
+	.selectRequiredMsg, .selectInvalidMsg { display: none; }
+	
+	/* Requerido */
+	.selectRequiredState .selectRequiredMsg,
+	.selectInvalidState .selectInvalidMsg { display: block; color: #F32125; }
+	
+	/* Invalido */
+	select.selectRequiredState, .selectRequiredState select,
+	select.selectInvalidState, .selectInvalidState select { color: #F87073; border-bottom:#F32125 solid thin; }
+	
+	/* En "Focus". */
+	selectFocusState select, select.selectFocusState { color: #AAA; }
+	
+/* [ ------ C H E C K B O X ------] */
+
+	/*  Mensajes en estatus Pendiente*/
+	.checkboxRequiredMsg, .checkboxMinSelectionsMsg, .checkboxMaxSelectionsMsg { display: none; }
+	
+	/* Requerido */
+	.checkboxRequiredState .checkboxRequiredMsg,
+	.checkboxMinSelectionsState .checkboxMinSelectionsMsg,
+	.checkboxMaxSelectionsState .checkboxMaxSelectionsMsg { display: block; color: #F32125; }
+	
+/* [ ------ R A D I O ------] */
+
+	/*  Mensajes en estatus Pendiente*/
+	.radioRequiredMsg, .radioInvalidMsg{ display: none; }
+	
+	.radioRequiredState .radioRequiredMsg,
+	.radioInvalidState .radioInvalidMsg { display: block; color: #F32125; }
+	
+	
+	
+	
