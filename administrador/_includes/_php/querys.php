@@ -219,7 +219,7 @@ if ($_POST['addImg'] == 'true') {
 
     if (isset($_FILES['imagen'])) {
         $fileName = $_FILES['imagen']['name'];
-        $fileNameCmps = explode(".", $fileName);
+        $fileNameCmps = explode(".", $fileName);  
         $fileExtension = strtolower(end($fileNameCmps));
         $pathIg = '_images/imagenesPlat/' . $fileName. '.'. $fileExtension;
         move_uploaded_file($_FILES['imagen']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/atlas/administrador/_images/imagenesPlat/' . $fileName. '.'.$fileExtension);

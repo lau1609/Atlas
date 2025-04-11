@@ -88,6 +88,21 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
         '</div>'+
     '</div>';
 
+
+    let htmlTypAtrac = '<div class="contTypAtrac">'+
+            '<div class="contButTypAtrac"><button id="addTypAtrac" class="colorYellow">Nuevo</button></div>'+
+            '<div class="contTypAtrac">'+
+                '<table id="tabTypAtrac">'+
+                    '<caption>Tipos de atractivos</caption>'+
+                    '<tr class="title">'+
+                        '<th>Nombre</th>'+
+                        '<th>Status</th>'+
+                    '</tr>'+
+                '</table>'+
+            '</div>'+
+        '</div>'+
+    '</div>';
+
     let pop1 = '<div class="popAtractivos">'+
             '<div class="contAtractivo">'+
                 '<div class="contImgClose"><img id="close" src="_images/borrar.png" alt=""></div>'+
@@ -153,7 +168,7 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
                                     '<legend>Imagen</legend>'+
                                     '<label class="__lk-fileInput">'+
                                         '<span class="spanPort" data-default="Choose file">Archivo</span>'+
-                                        '<input class="validate" name="imagen" id="imagen" accept="image/png, image/jpeg, image/jpg" type="file">'+
+                                        '<input class="validate" name="imagen" id="portada" accept="image/png, image/jpeg, image/jpg" type="file">'+
                                     '</label>'+
                                 '</fieldset>'+
                                 '<div class="contButSub"><input type="submit" class="colorYellow" value="Enviar"></div>'+
@@ -257,6 +272,11 @@ $(document).ready(function() {
             case 4:
                 $('#aliIni').html(htmlImages);
                 images();
+                break;
+
+            case 5:
+                $('#aliIni').html(htmlTypAtrac);
+                typAtrac();
                 break;
 
             default:
@@ -715,18 +735,24 @@ $(document).ready(function() {
             console.log('se actualiza');
           var label = $(this).parent().find('.spanPort'); 
           if(typeof(this.files) !='undefined'){ // fucking IE      
-            if(this.files.length == 0){
+            if(this.files.length == 0 ){
                 console.log('hay archivo');
               label.removeClass('withFile').text(label.data('default'));
-            }
-            else{
-              var file = this.files[0]; 
-              var name = file.name;
-              var size = (file.size / 1048576).toFixed(3); //size in mb 
-              label.addClass('withFile').text(name + ' (' + size + 'mb)');
+            }else{
+                console.log(this.files[0].size);
+                if (this.files[0].size > 1000000) {
+                    console.log('hay archivo');
+                    alert('Las imagenes deben pesar menos de 1MB');
+                    return;
+                }else{
+                    var file = this.files[0]; 
+                    var name = file.name;
+                    var size = (file.size / 1048576).toFixed(3); //size in mb 
+                    label.addClass('withFile').text(name + ' (' + size + 'mb)');
+                }
+              
             }   
-          }
-          else{
+          }else{
             var name = this.value.split("\\");
                 label.addClass('withFile').text(name[name.length-1]);
           }
@@ -749,15 +775,22 @@ $(document).ready(function() {
         fileList.empty(); 
         return;
     }
+
+    
     fileList.empty();
     files.forEach((file, index) => {
-        let li = $(`
-            <li class="file-item">
-                <span>${file.name} (${(file.size / 1048576).toFixed(2)} MB)</span>
-                <button class="remove-file" data-index="${index}">❌</button>
-            </li>
-        `);
-        fileList.append(li);
+        if (file.size > 1000000) {
+            alert('Las imagenes no deben pesar mas de 1MB');
+            return;
+        }else{
+            let li = $(`
+                <li class="file-item">
+                    <span>${file.name} (${(file.size / 1048576).toFixed(2)} MB)</span>
+                    <button class="remove-file" data-index="${index}">❌</button>
+                </li>
+            `);
+            fileList.append(li);
+        }
     });
     $('.remove-file').on('click', function () {
         let indexToRemove = $(this).data('index');

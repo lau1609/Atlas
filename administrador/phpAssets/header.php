@@ -21,6 +21,7 @@
                             <p class="opcMenu" data-opc="2" id="stTransparente">Atractivos</p>
                             <p class="opcMenu" id="vehiculos" data-opc="3">Municipios </p>
                             <p class="opcMenu" id="vehiculos" data-opc="4">Imagenes </p>
+                            <p class="opcMenu" id="vehiculos" data-opc="5">Tipos de atractivos </p>
                             <!-- <div class="contVehi none">
                                 <p data-vehi="1" class="opcVehi">Entrega/Recepción</p>
                                 <p data-vehi="2" class="opcVehi">Solicitudes</p>
