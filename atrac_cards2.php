@@ -115,7 +115,7 @@ main {
     </div>
 
 <!-- Contenedor principal de contenido -->
-<div class="flex-grow-1 d-flex flex-column" style="min-height: 100%; background-image: url('_images/textura_chihuahua_es_para_ti.svg');  background-repeat: repeat; background-color: rgba(255, 255, 255, 0.85); background-blend-mode: overlay;">
+<div class="flex-grow-1 d-flex flex-column" style="min-height: 100%; background-image: url('_images/textura_chihuahua_es_para_ti.svg');  background-repeat: repeat; background-color: rgba(255, 255, 255, 0.5); background-blend-mode: overlay;">
     <div id="atractivosContainer" class="container flex-grow-1 d-flex flex-wrap gap-3 p-3 justify-content-center" style="max-width: 130em"></div>
     <!-- Contenedor para la paginación -->
     <div id="paginationContainer" class="d-flex justify-content-center my-3"></div>

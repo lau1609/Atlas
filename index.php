@@ -199,7 +199,7 @@ $result = $connectMySql->query($query);
                     <div class="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
                         <h2 class="fw-bold text-white display-2">Descubre Bocoyna</h2>
                         <p class="text-white mt-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium, justo lacus lacinia est, lacinia auctor ante mi non eros. Proin nisl odio.posuere sodales augue lacinia ac. Suspendisse mollis accumsan quam ut tristique
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium
                         </p>
                 </div>
                 
@@ -210,7 +210,7 @@ $result = $connectMySql->query($query);
                 <div class="banner-overlay"></div>
                 <div class="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
                 <h2 class="fw-bold text-white display-2">Descubre Bocoyna</h2>
-                <p class="text-white mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium, justo lacus lacinia est, lacinia auctor ante mi non eros. Proin nisl odio.posuere sodales augue lacinia ac. Suspendisse mollis accumsan quam ut tristique.</p>
+                <p class="text-white mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium</p>
                 </div>
             </div>
             <!-- Slide 3 -->
@@ -219,7 +219,7 @@ $result = $connectMySql->query($query);
                 <div class="banner-overlay"></div>
                 <div class="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
                     <h2 class="fw-bold display-2 text-white">Descubre Bocoyna</h2>
-                    <p class="text-white mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium, justo lacus lacinia est, lacinia auctor ante mi non eros. Proin nisl odio.posuere sodales augue lacinia ac. Suspendisse mollis accumsan quam ut tristique.</p>
+                    <p class="text-white mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium</p>
                 </div>
             </div>
         </div>
@@ -258,4 +258,4 @@ $result = $connectMySql->query($query);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+</html>     

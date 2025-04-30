@@ -99,7 +99,10 @@ if ($("#map").length) {
                             <h5 class="card-title">${atractivo.atrac_name}</h5>
                             <p class="card-text">${atractivo.muni_name}</p>
                             <button class="btn btn-primary btn-sm mt-2" onclick="verUbicacion(${atractivo.atrac_latitud}, ${atractivo.atrac_longitud})">
-                                Ver en Mapa
+                                Ver en Mapakjn 
+                            </button>
+                            <button class="btn btn-secondary btn-sm mt-2" onclick="window.location.href='atractivos.php?id=${atractivo.atrac_id}'">
+                                Más información
                             </button>
                         </div>
                     </div>
