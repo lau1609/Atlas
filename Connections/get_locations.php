@@ -6,21 +6,19 @@
 
 include_once("connectMySql.php");
 
-$query = "SELECT 
-    atractivos_tb.*,  
-    gallery_tb.gal_url,
-    municipios_tb.muni_name
-FROM 
-    atractivos_tb
-JOIN 
-    gallery_tb
-ON 
-    atractivos_tb.atrac_id = gallery_tb.gal_dif
-JOIN 
-    municipios_tb
-ON 
-    atractivos_tb.atrac_muni_id = municipios_tb.muni_id;
-"; 
+$query = "
+SELECT 
+    a.atrac_id,
+    a.atrac_name,
+    a.atrac_latitud,
+    a.atrac_longitud,
+    a.atrac_cover_text,
+    m.muni_name,
+    g.gal_url
+FROM atractivos_tb a
+JOIN municipios_tb m ON a.atrac_muni_id = m.muni_id
+JOIN gallery_tb g ON a.atrac_id = g.gal_dif AND g.gal_type = 3
+";
 $result = $connectMySql->query($query);
 
 $locations = [];

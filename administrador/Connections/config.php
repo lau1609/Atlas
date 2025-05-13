@@ -6,8 +6,8 @@ $hostname_connectMySql = "localhost";
 
 if($server_source == 'local'):
 $database_connectMySql = "atlas_bd";
-$username_connectMySql = "userAtlas";
-$password_connectMySql = "Atlas.2025";
+$username_connectMySql = "root";
+$password_connectMySql = "";
 else:
 $database_connectMySql = "u960560109_perfil_visitan";
 $username_connectMySql = "if0_34488716";

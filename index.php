@@ -1,3 +1,44 @@
+<?php
+include_once("Connections/connectMySql.php");
+
+// Tomar N municipios aleatorios
+$queryMunicipios = "
+SELECT 
+    m.muni_id,
+    m.muni_name,
+    m.muni_cover_text,
+    m.muni_reg_id,
+    r.reg_name,
+    icono.gal_url AS icono_region_url
+FROM municipios_tb m
+JOIN regiones_tb r ON m.muni_reg_id = r.reg_id
+LEFT JOIN gallery_tb icono ON icono.gal_dif = m.muni_reg_id AND icono.gal_type = 5
+ORDER BY RAND()
+LIMIT 3
+";
+
+$resultMunicipios = $connectMySql->query($queryMunicipios);
+$slides = [];
+
+while ($muni = $resultMunicipios->fetch_assoc()) {
+    // Obtener imagen de fondo aleatoria del municipio
+    $subquery = "
+    SELECT g.gal_url
+    FROM atractivos_tb a
+    JOIN gallery_tb g ON a.atrac_id = g.gal_dif AND g.gal_type = 3
+    WHERE a.atrac_muni_id = {$muni['muni_id']}
+    ORDER BY RAND()
+    LIMIT 1
+    ";
+    $resImg = $connectMySql->query($subquery);
+    $imgData = $resImg->fetch_assoc();
+
+    $muni['gal_url'] = $imgData ? $imgData['gal_url'] : '_images/default.jpg';
+    $slides[] = $muni;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -63,7 +104,7 @@
     <!-- Contenido centrado -->
     <div class="content position-absolute top-50 start-50 translate-middle text-center" style="z-index: 2;">
         <img src="_images/mapa_regiones.png" alt="Logo principal" style="width: 150px; height: auto;">
-        <h1 class="display-1 fw-bold text-white">Atlas de Chihuahua</h1>
+        <h1 class="display-1 fw-bold text-white">Atlas Turístico</h1>
     </div>
 </section>
 
@@ -72,7 +113,7 @@
     <div class="row justify-content-center align-items-center">
         <!-- Contenedor de Texto -->
         <div class="col-md-6 order-md-1" style="max-width: 30em;">
-            <h2 class="fw-bold text-start">CONOCE EL ATLAS DE CHIHUAHUA</h2>
+            <h2 class="fw-bold text-start">CONOCE EL ATLAS TURISTICO DE CHIHUAHUA</h2>
             <hr>
             <p class="text-start">
                 Rorem ipsum dolor sit amet, consectetur adipiscing elit. <br><br>
@@ -125,7 +166,7 @@
 <?php
 include_once("Connections/connectMySql.php");
 
-// Consulta para obtener los atractivos naturales
+// Consulta para obtener los atractivos
 $query = "SELECT 
     atractivos_tb.atrac_name,  
     municipios_tb.muni_name,
@@ -137,8 +178,12 @@ JOIN
     gallery_tb ON atractivos_tb.atrac_id = gallery_tb.gal_dif
 JOIN 
     municipios_tb ON atractivos_tb.atrac_muni_id = municipios_tb.muni_id
-WHERE 
-    gallery_tb.gal_type = 2;"; // Ajusta el tipo de galería según lo que necesites
+WHERE  
+    gallery_tb.gal_type = 3  
+ORDER BY RAND();"; // Agregado para aleatorizar los resultados
+
+
+
 
 $result = $connectMySql->query($query);
 ?>
@@ -189,52 +234,38 @@ $result = $connectMySql->query($query);
 
 <!-- Banner Secundario con Carrusel -->
 <section class="position-relative">
-    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <!-- Slide 1 -->
-            <div class="carousel-item active">
-                <a href="regiones.php" style="text-decoration: none; color: inherit;"></a>
-                    <img src="_images/creel.jpg" alt="Creel" class="img-fluid w-100 zoom-in">
-                    <div class="banner-overlay"></div>
-                    <div class="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
-                        <h2 class="fw-bold text-white display-2">Descubre Bocoyna</h2>
-                        <p class="text-white mt-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium
-                        </p>
-                </div>
-                
+  <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <?php foreach ($slides as $index => $municipio): ?>
+      <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+        <a href="municipios.php?id=<?php echo $municipio['muni_id']; ?>" style="text-decoration: none; color: inherit;">
+          <img src="<?php echo $municipio['gal_url']; ?>" alt="<?php echo $municipio['muni_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom" style="object-fit: cover;">
+          <div class="banner-overlay"></div>
+          <div class="carousel-caption position-absolute top-50 start-50 translate-middle text-center p-3" style="z-index: 2; width: 100%;">
+            <!-- Icono --> 
+            <div class="banner-icon mb-3 d-flex align-items-center justify-content-center rounded-circle" style="width: 100px; height: 100px; background-color: rgba(0,0,0,0.5);">     
+            <img src="<?php echo $municipio['icono_region_url']; ?>" alt="Icono de región" class="img-fluid" style="max-width: 60%; max-height: 60%;">
             </div>
-            <!-- Slide 2 -->
-            <div class="carousel-item">
-                <img src="_images/creel.jpg" alt="Paquimé" class="img-fluid w-100 zoom-in">
-                <div class="banner-overlay"></div>
-                <div class="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
-                <h2 class="fw-bold text-white display-2">Descubre Bocoyna</h2>
-                <p class="text-white mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium</p>
-                </div>
-            </div>
-            <!-- Slide 3 -->
-            <div class="carousel-item">
-                <img src="_images/creel.jpg" alt="Bocoyna" class="img-fluid w-100 zoom-in">
-                <div class="banner-overlay"></div>
-                <div class="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
-                    <h2 class="fw-bold display-2 text-white">Descubre Bocoyna</h2>
-                    <p class="text-white mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl eu lorem malesuada hendrerit et feugiat nisl. Phasellus condimentum mauris non purus tincidunt, sit amet iaculis metus mattis. Donec porta, ex at mollis pretium</p>
-                </div>
-            </div>
-        </div>
-        <!-- Controles del Carrusel -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-        </button>
+            <p class="text-white fs-6 fw-semibold"><?php echo $municipio['reg_name']; ?></p>
+            <h2 class="fw-bold text-white display-2">Descubre <?php echo $municipio['muni_name']; ?></h2>
+            <p class="h6 text-white mt-3 mb-4"><?php echo $municipio['muni_cover_text']; ?></p>
+          </div>
+        </a>
+      </div>
+      <?php endforeach; ?>
     </div>
 
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
 </section>
+
 
 <section>
     <div class="logo-container">

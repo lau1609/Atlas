@@ -11,7 +11,7 @@
                     <ul class="navbar-nav ms-auto fs-6 fw-bolder">
                         <li class="nav-item"><a class="nav-link" href="index.php">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="map.php">Navega por el mapa</a></li>
-                        <li class="nav-item"><a class="nav-link" href="atractivos.php">Atractivos turisticos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="atrac_cards.php">Atractivos turisticos</a></li>
                     </ul>
                 </div>
             </div>

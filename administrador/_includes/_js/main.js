@@ -778,11 +778,11 @@ $(document).ready(function() {
 
     
     fileList.empty();
-    files.forEach((file, index) => {
+    files.forEach((file, index) => {console.log('el for');
         if (file.size > 1000000) {
             alert('Las imagenes no deben pesar mas de 1MB');
             return;
-        }else{
+        }else{ console.log('el Else');
             let li = $(`
                 <li class="file-item">
                     <span>${file.name} (${(file.size / 1048576).toFixed(2)} MB)</span>
