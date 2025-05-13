@@ -80,18 +80,18 @@ body{
 #formAddImg input:focus-visible,#formAddImg select:focus-visible, #formAddImg textarea:focus-visible,
 #formEditMuni input:focus-visible, #formEditMuni textarea:focus-visible,
 #formEditImage input:focus-visible, #formEditImage textarea:focus-visible,
-#formEditAtrac input:focus-visible, #formEditAtrac textarea:focus-visible{
+#formEditAtrac input:focus-visible, #formEditAtrac textarea:focus-visible, 
+#formAddTypAtrac input:focus-visible,#formEditTypAtrac input:focus-visible {
     outline: none;
     /* border: 1px solid rgba(112, 36, 119, .3); */
     border-bottom: 2px solid rgba(112, 36, 119, 255);
     transition: .4s;
 }
-#formAddAtrac input::placeholder, #formAddAtrac textarea::placeholder
-#formAddImg input::placeholder, #formAddImg textarea::placeholder,
-#formEditMuni input::placeholder, #formEditMuni textarea::placeholder
-#formEditImage input::placeholder, #formEditImage textarea::placeholder
-#formEditAtrac input::placeholder, #formEditAtrac textarea::placeholder{
-    color: rgb(41,155,21,.5);
+::placeholder{
+    /* color: rgb(41,155,21,.5); */
+    color: gray;
+    font-weight: 100;
+    font-style: italic;
 }
 /* .__lk-fileInput span{
     background: #2683E1;
@@ -537,6 +537,9 @@ svg#closeSesion {
     align-items: center;
     height: 100vh;
 }
+.contGalery{
+    width: 100%;
+}
 .ellipsis{
     display: inline-block;
     max-width: 80px;
@@ -552,7 +555,7 @@ svg#closeSesion {
     justify-content: end;
     margin-top: 40px;
 }
-#addAtrac, #addImage, .addTypAtrac {
+#addAtrac, #addImage, .addTypAtrac, .button, #addTypAtrac {
     border-style: none;
     padding: 10px 20px;
     background: rgb(47, 157, 213);
@@ -566,7 +569,7 @@ svg#closeSesion {
     overflow: scroll;
     align-items: center;
 }
-.svgStat{
+.svgStat, .svgStatAtrac {
     width: 30px;
 }
 
@@ -596,7 +599,7 @@ caption {
     background-color: rgba(154, 189, 28, 255);
 }
 .editAtrac, .editMuni, .editImage{
-    color: rgba(218, 13, 21, 255);
+    color: rgb(47, 157, 213);
     font-weight: 900;
 }
 
@@ -643,7 +646,7 @@ caption {
     color: rgba(112, 36, 119, 255);
     font-weight: 900;
 }
-form#formAddAtrac, #formEditAtrac, #formEditMuni, #formEditImage, #formAddImg {
+form#formAddAtrac, #formEditAtrac, #formEditMuni, #formEditImage, #formAddImg, #formAddTypAtrac, #formEditTypAtrac {
     width: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -651,9 +654,13 @@ form#formAddAtrac, #formEditAtrac, #formEditMuni, #formEditImage, #formAddImg {
     overflow: scroll;
     /* height: 70vh; */
 }
-
-#formAddAtrac input, #formAddAtrac select,#formAddAtrac textarea ,
- #formAddImg input, #formAddImg select,#formAddImg textarea{
+.black{
+    color: rgb(0, 0, 0, .8) !important;
+    font-weight: 600 !important;
+}
+#formAddAtrac input, #formAddAtrac textarea ,
+ #formAddImg input, #formAddImg textarea, #formAddTypAtrac input,
+ #formAddImg select,#formAddAtrac select {
 /*#formEditImage input, #formEditImage select,#formEditImage textarea, 
 #formEditMuni input, #formEditMuni select,#formEditMuni textarea,
 #formEditAtrac input, #formEditAtrac select,#formEditAtrac textarea { */
@@ -662,8 +669,13 @@ form#formAddAtrac, #formEditAtrac, #formEditMuni, #formEditImage, #formAddImg {
     margin-bottom: 40px;
     /* border: 1px solid rgba(248, 186, 0); */
     border-bottom: 2px solid rgb(41,155,21,.5) ;
-    color: rgb(41, 155, 21, .5);
+    color: rgb(0, 0, 0, .8);
+    font-weight: 600;
     padding: 12px 6px;
+}
+#formAddImg select,#formAddAtrac select{
+    color: gray;
+    font-weight: 100;
 }
 .contImgClose{
     width: 90%;
@@ -713,7 +725,7 @@ fieldset {
 }
 
 legend {
-    color: rgba(41, 155, 21, 0.5);
+    color: gray;
 }
 
 .__lk-fileInput {
@@ -802,7 +814,7 @@ legend {
   }
   #formEditAtrac input, #formEditAtrac textarea, #formEditAtrac select, 
   #formEditMuni input, #formEditMuni textarea, #formEditMuni select,
-  #formEditImage input, #formEditImage textarea, #formEditImage select {
+  #formEditImage input, #formEditImage textarea, #formEditImage select, #formEditTypAtrac input {
     width: 98%;
     margin-bottom: 20px;
     border-style: none;
@@ -818,6 +830,7 @@ legend {
     color: rgb(47, 157, 213);
     font-size: 1.5rem;
     margin-top: 0;
+    width: 90%;
 
 }
 .sendEditAtrac, .sendEditMuni, .sendEditImage {
@@ -900,6 +913,11 @@ button#addEditGal, #addEditPort, #addEditImg {
 .messPop {
     text-align: center;
 }
+.messPop span{
+    font-size: .8rem;
+    font-style: italic;
+    color: gray;
+}
 .contButDel{
     display: flex;
     justify-content: space-evenly;
@@ -909,3 +927,32 @@ button#addEditGal, #addEditPort, #addEditImg {
 .contPortada{
     width: 100%;
 }
+
+/* VISOR DE MANUAL */
+button#prevPage, #nextPage, #zoomOut, #zoomIn {
+    border-style: none;
+    padding: 8px 15px;
+    margin: 15px;
+    background: rgba(112,36,119,255);
+    color: white;
+}
+.contPdf{
+    width: 85%;
+    margin: auto;
+    margin-left: 11%;
+}
+.aliPDF{
+    text-align: center; 
+    border: 1px solid rgba(154, 189, 28, 255);
+    border-bottom: 0;
+    background: rgba(154, 189, 28, 255);
+    color: white;
+}
+#pdf-container{
+    border: 1px solid rgb(41, 155, 21, .5);
+    height: 85vh; 
+    overflow: auto; 
+    text-align: center; 
+    border-top: 0
+}
+
