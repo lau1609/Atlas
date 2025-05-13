@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="es" prefix="og: https://ogp.me/ns#">
     <head>
-        <meta property="og:url" content="https://vhverificaciones.com.mx/index.php" >
+        <meta property="og:url" content="" >
         <meta property="og:type" content="website" >
-        <meta property="og:title" content="Verificación de Hidrocarburos" >
-        <meta property="og:description" content="Bienvenidos a Verificación de hidrocarburos, estamos a tus órdenes." >
-        <meta property="og:image" content="_images/OG.jpg" >
+        <meta property="og:title" content="" >
+        <meta property="og:description" content="" >
+        <meta property="og:image" content="" >
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
         
         <?php include_once("phpAssets/head.php"); ?>
         

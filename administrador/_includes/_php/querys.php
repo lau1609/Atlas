@@ -144,6 +144,23 @@ if ($_POST['changeStat'] == 'true') {
         }
 }
 
+if ($_POST['changeStatAtrac'] == 'true') {
+    //     ini_set("display_errors",1);
+    // error_reporting(E_ALL);
+    
+        $stat = $_POST['valStat'];
+        $id = $_POST['id'];
+        $sql = "UPDATE type_atrac_tb
+            SET status_typ_atrac = '$stat'
+            WHERE 	id_typ_atrac  = '$id'"; 
+        // echo $sql;
+            if (mysqli_query($connectMySql, $sql)) {
+                echo 'successful';
+            }else{
+                echo 'unsuccesful';
+            }
+    }
+
 if ($_POST['validateAddMuni'] == 'true') {
     $name = $_POST['name'];
     $desc = $_POST['desc'];
@@ -233,6 +250,29 @@ if ($_POST['addImg'] == 'true') {
 }
 
 
+if ($_POST['addAtrac'] == 'true') {
+    $name = $_POST['name'];
+
+    $sql4 = "INSERT INTO type_atrac_tb (name_typ_atrac) VALUES ('$name')";
+            
+    if ($connectMySql->query($sql4) === TRUE) {
+        echo 'succesfull';
+    }
+        
+}
+
+
+if ($_POST['edtTypAtrac'] == 'true') {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $sql3 = "UPDATE type_atrac_tb SET name_typ_atrac = '$name'
+            WHERE id_typ_atrac = '$id'";
+
+    if ($connectMySql->query($sql3) === TRUE) {
+        echo 'succesfull';
+    }
+
+}
 
 
 if ($_POST['typImage'] == 'true') {
@@ -256,6 +296,28 @@ if ($_POST['typImage'] == 'true') {
 
 }
 
+
+if ($_POST['typAtrac'] == 'true') {
+    $query_rsQueryTypAtrac = sprintf("SELECT * FROM type_atrac_tb");
+    $rsQueryTypAtrac = mysqli_query($GLOBALS['connectMySql'], $query_rsQueryTypAtrac);
+    $row_rsQueryTypAtrac = mysqli_fetch_assoc($rsQueryTypAtrac);
+    $totalRows_rsQueryTypAtrac = mysqli_num_rows($rsQueryTypAtrac);
+    $queryTypAtrac = array();
+    if ($totalRows_rsQueryTypAtrac > 0) {
+        do {
+            array_push($queryTypAtrac, array(
+                'id' => $row_rsQueryTypAtrac['id_typ_atrac'],
+                'stat' => $row_rsQueryTypAtrac['status_typ_atrac'],
+                'name' => $row_rsQueryTypAtrac['name_typ_atrac']
+            ));
+            
+        } while ($row_rsQueryTypAtrac = mysqli_fetch_assoc($rsQueryTypAtrac));
+        // var_dump($queryVehiDis);
+        // echo '-------------------------------';
+    }
+    print_r(json_encode($queryTypAtrac));
+
+}
 
 
 
@@ -570,6 +632,8 @@ function regiones($connectMySql){
 }
 
 function tiposAtractivos($connectMySql){
+    // ini_set("display_errors",1);
+    // error_reporting(E_ALL);
     // ---------------------- TIPOS DE ATRACTIVOS  -----------------------------
         // echo 'tipos de atractivos';
         $query_rsQueryTypAtrac = sprintf("SELECT * FROM type_atrac_tb ");
@@ -588,6 +652,7 @@ function tiposAtractivos($connectMySql){
             //print_r(json_encode($QueryRegiones));
             
         }
+        return $queryTypAtrac;
 }
 
 ?>

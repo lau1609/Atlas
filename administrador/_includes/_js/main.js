@@ -106,23 +106,23 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
     let pop1 = '<div class="popAtractivos">'+
             '<div class="contAtractivo">'+
                 '<div class="contImgClose"><img id="close" src="_images/borrar.png" alt=""></div>'+
-                '<h3>Agregar Atractivo turistico</h3>'+
+                '<h3>Agregar atractivo turistico</h3>'+
                 '<form id="formAddAtrac">'+
-                    '<input type="text" class="validate" name="name" placeholder="Nombre" id="">'+
-                    '<textarea name="desc" class="validate" placeholder="Descripción" id=""></textarea>'+
-                    '<textarea name="descShort" class="validate" placeholder="Descripción Corta" id=""></textarea>'+
+                    '<input type="text" class="validate" name="name" placeholder="Nombre (50 caracteres)" id="">'+
+                    '<textarea name="desc" class="validate" placeholder="Descripción (900 caracteres)" id=""></textarea>'+
+                    '<textarea name="descShort" class="validate" placeholder="Descripción Corta (250 caracteres)" id=""></textarea>'+
                     '<input type="text" class="validate" name="lat" placeholder="Latitud" id="">'+
                     '<input type="text" class="validate" name="long" placeholder="Longitud" id="">'+
                     // '<input type="text" class="validate" name="temp" placeholder="Temperatura" id="">'+
                     // '<input type="text" class="validate" name="cult" placeholder="Cultura" id="">'+
                     // '<input type="text" class="validate" name="natu" placeholder="Naturaleza" id="">'+
-                    '<input type="text" class="validate" name="dir" placeholder="Dirección">'+
-                    '<input type="text" class="validate" name="hor" placeholder="Horarios" id="">'+
-                    '<input type="email" class="validate" name="mail" placeholder="Email" id="">'+
-                    '<input type="tel" maxlength="10" class="validate" name="tel" placeholder="Telefono de contacto" id="">'+
+                    '<input type="text" class="validate" name="dir" placeholder="Dirección (150 caracteres)">'+
+                    '<input type="text" class="validate" name="hor" placeholder="Horarios (80 caracteres)" id="">'+
+                    '<input type="email" class="" name="mail" placeholder="Email (100 caracteres)" id="">'+
+                    '<input type="tel" maxlength="10" class="" name="tel" placeholder="Telefono de contacto (10 caracteres)" id="">'+
                    ' <input type="number" class="validate" name="price" placeholder="Precio de entrada" id="">'+
-                    '<input type="text" name="face" placeholder="URL de Facebook" id="">'+
-                    '<input type="text" name="inst" placeholder="URL de Instagram" id="">'+
+                    '<input type="text" name="face" placeholder="URL de Facebook (150 caracteres)" id="">'+
+                    '<input type="text" name="inst" placeholder="URL de Instagram (200 caracteres)" id="">'+
                     '<select name="typAtrac" class="validate">'+
                        ' <option value="" hidden>Tipo de atractivo</option>'+
                        ' <option value="" hidden>Atractivo 1</option>'+
@@ -143,7 +143,7 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
                             '</label>'+
                         '</fieldset>'+
                         '<fieldset>' +
-                            '<legend>Imágenes de galería</legend>' +
+                            '<legend>Imágenes de galería <span style="font-size:.7rem">(máximo 3 imágenes)<span></legend>' +
                             '<label class="__lk-fileInput">'+
                                 '<span data-default="Elige archivos">Archivos</span>'+
                                 '<input id="file-input" name="images[]" type="file" accept="image/png, image/jpeg, image/jpg" multiple>'+
@@ -176,6 +176,17 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
                         '</div>'+
                     '</div>';
 
+        let pop3 = '<div class="popAtractivos">'+
+                    '<div class="contAtractivo" style="justify-content: flex-start;">'+
+                        '<div class="contImgClose"><img id="close" src="_images/borrar.png" alt=""></div>'+
+                        '<form id="formAddTypAtrac">'+
+                            '<input name="nameAtrac" type="text" placeholder="Nombre del atractivo" class="validate">'+
+                            '</fieldset>'+
+                            '<div class="contButSub"><input type="submit" class="colorYellow" value="Enviar"></div>'+
+                        '</form>'+
+                    '</div>'+
+                '</div>';
+
         let popValidation = '<div class="popValidation">'+
             '<div class="aliPopVali">'+
                 '<div class="contPopDel">'+
@@ -183,6 +194,20 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
                 '<div class="contButDel"><img src="_images/noAcept.png" alt="cerrar" width="30px" id="closePopDel"><img class="butAccet" src="_images/accept.png" alt="aceptar" width="30px"></div>'+
                 '</div>'+
         '</div>';
+
+        let htmlPDF = '<div class="contPdf" style="">'+
+        '<div class="aliPDF" style="">'+
+            '<button id="prevPage">⬅ Anterior</button>'+
+            '<span>Página: <span id="page_num">1</span> / <span id="page_count">--</span></span>'+
+            '<button id="nextPage">Siguiente ➡</button>'+
+            '&nbsp; | &nbsp;'+
+            '<button id="zoomOut">- Zoom</button>'+
+            '<button id="zoomIn">+ Zoom</button>'+
+        '</div>'+
+        '<div id="pdf-container">'+
+            '<canvas id="pdf-viewer"></canvas>'+
+        '</div>'+
+    '</div>';
 
 //         let incidencias = Array();
 // var opcHtml = [html, html2, html3, html4, html5];
@@ -278,6 +303,11 @@ $(document).ready(function() {
                 $('#aliIni').html(htmlTypAtrac);
                 typAtrac();
                 break;
+            case 6:
+                $('#aliIni').html(htmlPDF);
+                console.log('Inserta el html');
+                manual();
+                break;
 
             default:
                 break;
@@ -286,18 +316,22 @@ $(document).ready(function() {
 
     $(document).on(clickHandler, '#addAtrac', function(e) {
         $('#aliIni').append(pop1);
+        console.log(arrayPrin);
 
         $.each(arrayPrin['typAtrac'], function(index, opcion) {
             var optionElement = $('<option></option>').val(opcion.id).text(opcion.name);
+            optionElement.attr('class', 'black');
             $('select[name="typAtrac"]').append(optionElement);
         });
 
         $.each(arrayPrin['regs'], function(index, opcion) {
             var optionElement = $('<option></option>').val(opcion.id).text(opcion.name);
+            optionElement.attr('class', 'black');
             $('select[name="region"]').append(optionElement);
         });
         $.each(arrayPrin['munis'], function(index, opcion) {
             var optionElement = $('<option></option>').val(opcion.id).text(opcion.name);
+            optionElement.attr('class', 'black');
             $('select[name="muni"]').append(optionElement);
         });
 
@@ -333,6 +367,9 @@ $(document).ready(function() {
 
     });
 
+    $(document).on(clickHandler, '#addTypAtrac', function(e) {
+        $('#aliIni').append(pop3);
+    });
     
     $(document).on(clickHandler, '#close', function(e) {
         $('.popAtractivos').remove();
@@ -359,7 +396,7 @@ $(document).ready(function() {
             valStat = 0;
             boton.attr('data-stat', "0");
         }else{
-            color='rgb(154, 189, 28);';
+            color='rgba(154, 189, 28, 255)';
             valStat = 1;
             boton.attr('data-stat', "1");
         }
@@ -387,6 +424,53 @@ $(document).ready(function() {
         });
         
     });
+
+
+
+    $(document).on(clickHandler, '.svgStatAtrac', function(e) {
+      //  console.log('click al svg'); 
+        let color;
+        let valStat;
+        let boton = $(this);
+      //  console.log(boton);
+        let path = $(this).find('path'); 
+        $(path).css('stroke', '');
+        let stat = $(this).attr('data-stat');
+        let id = $(this).attr('data-id');
+        if (stat == '1') {
+            color = 'gray';
+            valStat = 0;
+            boton.attr('data-stat', "0");
+        }else{
+            color='green';
+            valStat = 1;
+            boton.attr('data-stat', "1");
+        }
+        console.log(color, valStat, id);
+        $(path).css('stroke', color);
+        $.ajax({
+            url: '_includes/_php/querys.php',
+            type: 'POST',
+            dataType: "text",
+            data: {changeStatAtrac:true, valStat, id},
+            success: function(data) {
+                console.log(data);
+                let color;
+                if (data== 'successful') {
+                    console.log('se cambio el estatus');
+                } else {
+                        alert('Error en el servidor');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en la carga de datos:', status, error);
+                alert('Error en la carga de datos');
+            }
+        });
+        
+    });
+
+
 
     
     $(document).on(clickHandler, '#addEditGal', function(e) {
@@ -431,7 +515,7 @@ $(document).ready(function() {
     $(document).on(clickHandler, '.delImg', function(e) {
         let id = $(this).attr('data-id');
         $('.aliIni').append(popValidation);
-        $('.messPop ').html('¿Desea borrar este registro?');
+        $('.messPop ').html('¿Desea borrar este registro? <br> <span>(Esta acción no puede ser reversible)</span>');
         $('.butAccet').attr("data-id", id).attr("id", "acceptDelete");
         //console.log("ID:", this.id, "Data-ID:", this.getAttribute("data-id"));
     });
@@ -509,6 +593,34 @@ $(document).ready(function() {
     });
 
 
+    $(document).on(clickHandler, '.editTypAtract', function(e) {
+        console.log('editar');
+        let id = $(this).attr('data-id');
+        console.log(id);
+        console.log(arrayPrin);
+        for (let i = 0; i < arrayPrin.length; i++) {
+            if (arrayPrin[i]['id'] === id) {
+                let url;
+                console.log(arrayPrin[i]['id']);
+                
+                $('.aliIni').append('<div class="popAtractivos">'+
+                '<div class="aliPopEdit">'+
+                    '<div class="contPopEdit">'+
+                        '<div class="contImgClose"><img id="close" src="_images/borrar.png" alt=""></div>'+
+                        '<h3>Editar tipo de atracativo <span>'+arrayPrin[i]['name']+'</span></h3>'+
+                        '<form id="formEditTypAtrac">'+
+                            '<input type="hidden" name="id" value="'+arrayPrin[i]['id']+'" id="">'+
+                            '<input type="text" name="name" value="'+arrayPrin[i]['name']+'" id="">'+
+                            '<div class="contButSub"><input type="submit" class="colorYellow sendEditImage" value="Guardar"></div>'+
+                        '</form>'+
+                    
+                    //'</div>'+
+                '</div>'+
+                '</div>');
+            }
+        }
+       
+    });
 
 
     $(document).on(clickHandler, '.editMuni', function(e) {
@@ -590,8 +702,8 @@ $(document).ready(function() {
                         '<label>Latitud<input type="text" name="lat" class="validate" value="'+arrayPrin['atracs'][i]['lat']+'" placeholder="Dirección"></label>'+
                         '<label>Longitud<input type="text" name="long" class="validate" value="'+arrayPrin['atracs'][i]['lon']+'" placeholder="Dirección"></label>'+
                         '<label>Horario<input type="text" name="hor" class="validate" value="'+arrayPrin['atracs'][i]['hor']+'" placeholder="Horarios" id=""></label>'+
-                        '<label>Email<input type="email" name="mail" class="validate" value="'+arrayPrin['atracs'][i]['mail']+'" placeholder="Email" id=""></label>'+
-                        '<label>Telefono<input type="text" name="tel" class="validate" value="'+arrayPrin['atracs'][i]['tel']+'" placeholder="Telefono de contacto" id=""></label>'+
+                        '<label>Email<input type="email" name="mail" class="" value="'+arrayPrin['atracs'][i]['mail']+'" placeholder="Email" id=""></label>'+
+                        '<label>Telefono<input type="text" name="tel" class="" value="'+arrayPrin['atracs'][i]['tel']+'" placeholder="Telefono de contacto" id=""></label>'+
                         '<label>Precio<input type="number" name="price" class="validate" value="'+arrayPrin['atracs'][i]['precio']+'" placeholder="Precio de entrada" id=""></label>'+
                         '<label>URL de Facebook<input type="text" name="face" placeholder="URL de Facebook" value="'+arrayPrin['atracs'][i]['face']+'" id=""></label>'+
                         '<label>URL de Instagram<input type="text" name="inst" placeholder="URL de Instagram" value="'+arrayPrin['atracs'][i]['inst']+'" id=""></label>'+
@@ -824,6 +936,8 @@ $(document).on('submit','#formAddImg',function(e){
                 console.log(pair);
             }
             //return;
+
+            //popo
             request = $.ajax({
                 url: '_includes/_php/querys.php',
                 type: "post",
@@ -854,6 +968,55 @@ $(document).on('submit','#formAddImg',function(e){
             });
         }
 });
+
+
+
+
+$(document).on('submit','#formAddTypAtrac',function(e){
+    e.preventDefault();
+        console.log("Enviando");
+        let vali = validarDatos() ;
+        if (vali === 0 ) {
+            console.log('si entro');
+            let name = document.querySelector('input[name="nameAtrac"]').value;
+            var request;
+            var $form = $(this);
+            var $inputs = $form.find("input, select, button, textarea");
+            $inputs.prop("disabled", true);
+           // formData.append("editAddAtrac", true);
+            // for (var pair of formData.entries()) {
+            //     console.log(pair);
+            // }
+            request = $.ajax({
+                url: '_includes/_php/querys.php',
+                type: "post",
+                dataType: "text",
+                data: {addAtrac:true, name},
+            });
+    
+            request.done(function (response) {
+                console.log("Respuesta:", response);
+                if (response == 'succesfull') {
+                    $('.contAtractivo').html('<div class="contImgClose" ><img id="close2" data-cl="5" src="_images/borrar.png" alt=""></div>'+
+                        '<div class="contMessSave"><p>Se guardo correctamente</p></div>'
+                    );
+                } else{
+                    $('.contAtractivo').html('<div class="contImgClose" ><img id="close2" data-cl="5" src="_images/borrar.png" alt=""></div>'+
+                        '<div class="contMessSave"><p>ERROR EN LA CARAGA. Intente mas tarde</p></div>'
+                    );
+                }    
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                console.error("Error en la solicitud: " + textStatus);
+            });
+    
+            request.always(function () {
+                $inputs.prop("disabled", false);
+            });
+        }
+});
+
 
 
 
@@ -964,6 +1127,40 @@ $(document).on('submit','#formEditMuni',function(e){
     }
 
 });
+
+
+$(document).on('submit','#formEditTypAtrac',function(e){
+    e.preventDefault(); 
+    var $form = $(this);
+    var $inputs = $form.find("input, select, button, textarea");
+    $inputs.prop("disabled", true);
+    let name = document.querySelector('input[name="name"]').value;
+    let id = document.querySelector('input[name="id"]').value;
+    request = $.ajax({
+        url: '_includes/_php/querys.php',
+        type: "post",
+        dataType: "text",
+        data:{name, edtTypAtrac:true, id} , 
+    });
+    request.done(function (response) {
+        console.log("Respuesta:", response);
+        if (response == 'succesfull') {
+            $(`.opcMenu[data-opc="5"]`).click();
+        }else{
+            alert("Error en la actualización");
+        }
+        //alert("Envío exitoso");
+    });
+
+    request.fail(function (jqXHR, textStatus) {
+        console.error("Error en la solicitud: " + textStatus);
+    });
+
+    request.always(function () {
+        $inputs.prop("disabled", false);
+    });
+});
+
 
 
 $(document).on('submit','#formEditImage',function(e){
@@ -1201,7 +1398,7 @@ function typAtrac() {
         url: '_includes/_php/querys.php',
         type: 'POST',
         dataType: "json",
-        data: {images:true},
+        data: {typAtrac:true},
         success: function(data) {
             console.log(data);
             arrayPrin = data;
@@ -1209,21 +1406,18 @@ function typAtrac() {
             if (data.length != 0) {
                 for (let i = 0; i < data.length; i++) {
                     //data['munis'][i]['status'] == '1' ? color='rgba(154, 189, 28, 255)' : color='gray';
-                    let url = '';
-                    let button;
+                    let color;
                     //console.log(data[i]['urlImg']);
-                    let img = data[i]['urlImg'];
-                    if (img && img !== '') {
-                        url = data[i]['urlImg'];
+                    let stat = data[i]['stat'];
+                    if (stat == '1') {
+                        color = 'green';
                     }else{
-                        url = 'N/A';
+                        color = 'gray';
                     }
-                    $('#tabImages').append('<tr class="trInsert"> '+
-                        '<td style="">'+data[i]['typ_name']+'</td>'+
-                        '<td style="">'+url+'</td>'+
-                        '<td style="width: 20%;"><img style="width: 100%;" src="'+data[i]['url']+'" alt="img"></td>'+
-                        '<td style="width: 55px;"><svg class="delImg" data-id="'+data[i]['id']+'" style="width:40px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 6.38597C3 5.90152 3.34538 5.50879 3.77143 5.50879L6.43567 5.50832C6.96502 5.49306 7.43202 5.11033 7.61214 4.54412C7.61688 4.52923 7.62232 4.51087 7.64185 4.44424L7.75665 4.05256C7.8269 3.81241 7.8881 3.60318 7.97375 3.41617C8.31209 2.67736 8.93808 2.16432 9.66147 2.03297C9.84457 1.99972 10.0385 1.99986 10.2611 2.00002H13.7391C13.9617 1.99986 14.1556 1.99972 14.3387 2.03297C15.0621 2.16432 15.6881 2.67736 16.0264 3.41617C16.1121 3.60318 16.1733 3.81241 16.2435 4.05256L16.3583 4.44424C16.3778 4.51087 16.3833 4.52923 16.388 4.54412C16.5682 5.11033 17.1278 5.49353 17.6571 5.50879H20.2286C20.6546 5.50879 21 5.90152 21 6.38597C21 6.87043 20.6546 7.26316 20.2286 7.26316H3.77143C3.34538 7.26316 3 6.87043 3 6.38597Z" fill="#1C274C"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5956 22.0001H12.4044C15.1871 22.0001 16.5785 22.0001 17.4831 21.1142C18.3878 20.2283 18.4803 18.7751 18.6654 15.8686L18.9321 11.6807C19.0326 10.1037 19.0828 9.31524 18.6289 8.81558C18.1751 8.31592 17.4087 8.31592 15.876 8.31592H8.12404C6.59127 8.31592 5.82488 8.31592 5.37105 8.81558C4.91722 9.31524 4.96744 10.1037 5.06788 11.6807L5.33459 15.8686C5.5197 18.7751 5.61225 20.2283 6.51689 21.1142C7.42153 22.0001 8.81289 22.0001 11.5956 22.0001ZM10.2463 12.1886C10.2051 11.7548 9.83753 11.4382 9.42537 11.4816C9.01321 11.525 8.71251 11.9119 8.75372 12.3457L9.25372 17.6089C9.29494 18.0427 9.66247 18.3593 10.0746 18.3159C10.4868 18.2725 10.7875 17.8856 10.7463 17.4518L10.2463 12.1886ZM14.5746 11.4816C14.9868 11.525 15.2875 11.9119 15.2463 12.3457L14.7463 17.6089C14.7051 18.0427 14.3375 18.3593 13.9254 18.3159C13.5132 18.2725 13.2125 17.8856 13.2537 17.4518L13.7537 12.1886C13.7949 11.7548 14.1625 11.4382 14.5746 11.4816Z" fill="rgba(218,13,21)"></path> </g></svg></td>'+
-                        '<td style="width: 60px;" class="pointer zoom editImage" data-id="'+data[i]['id']+'">Editar</td>'+
+                    $('#tabTypAtrac').append('<tr class="trInsert"> '+
+                        '<td>'+data[i]['name']+'</td>'+
+                        '<td style="width: 150px;"><svg class="svgStatAtrac pointer" data-id="'+data[i]['id']+'" data-stat="1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 6.07026C18.3912 7.45349 20 10.0389 20 13C20 17.4183 16.4183 21 12 21C7.58172 21 4 17.4183 4 13C4 10.0389 5.60879 7.45349 8 6.07026M12 3V13" stroke="'+color+'" stroke-width="2" stroke-linecap="round"></path> </g></svg></td>'+
+                        '<td style="width: 150px;" class="pointer zoom editTypAtract" data-id="'+data[i]['id']+'">Editar</td>'+
                     '</tr>');
                 }
 
@@ -1281,6 +1475,76 @@ function images() {
             console.error('ERROR EN EL SERVIDOR:', status, error);
             $('#tabImages').append('<tr><td COLSPAN=4>NO HAY REGISTROS</td></tr>');
         }
+    });
+}
+
+
+function manual() {
+    console.log(document.location.origin);
+    const url = document.location.origin+'/atlas/administrador/_pdf/manual.pdf';
+
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    let pdfDoc = null,
+        pageNum = 1,
+        scale = 1.5,
+        canvas = document.getElementById('pdf-viewer'),
+        ctx = canvas.getContext('2d');
+
+    function renderPage(num) {
+        pdfDoc.getPage(num).then(function(page) {
+        let viewport = page.getViewport({ scale: scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        let renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        page.render(renderContext);
+
+        document.getElementById('page_num').textContent = num;
+        });
+    }
+
+    function queueRenderPage(num) {
+        if (num >= 1 && num <= pdfDoc.numPages) {
+        pageNum = num;
+        renderPage(pageNum);
+        }
+    }
+
+    function zoom(factor) {
+        scale += factor;
+        if (scale < 0.5) scale = 0.5;
+        if (scale > 4) scale = 4;
+        renderPage(pageNum);
+    }
+
+    // Carga el documento
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page_count').textContent = pdfDoc.numPages;
+        renderPage(pageNum);
+    });
+
+    // Botones
+    document.getElementById('prevPage').addEventListener('click', function() {
+        if (pageNum <= 1) return;
+        queueRenderPage(pageNum - 1);
+    });
+
+    document.getElementById('nextPage').addEventListener('click', function() {
+        if (pageNum >= pdfDoc.numPages) return;
+        queueRenderPage(pageNum + 1);
+    });
+
+    document.getElementById('zoomIn').addEventListener('click', function() {
+        zoom(0.25);
+    });
+
+    document.getElementById('zoomOut').addEventListener('click', function() {
+        zoom(-0.25);
     });
 }
 
