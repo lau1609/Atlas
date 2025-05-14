@@ -235,7 +235,7 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
     </div>
   </div>
 
-<section style="background-color: <?php echo $colorFondo; ?>; padding: 50px 0; background-image: url('_images/textura_chihuahua_es_para_ti.svg'); background-repeat: repeat;">
+  <section class="carrusel-atrac fade-in fancy-bg" style="background-color: <?php echo $colorFondo; ?>;">
   <<!-- CARRUSEL -->
   <div class="container mt-5 " style="max-width:1500px;">
     <h2 class="text-white text-center mb-4 fw-bold">Más atractivos turísticos</h2>

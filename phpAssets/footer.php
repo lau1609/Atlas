@@ -20,7 +20,7 @@
             <!-- Contacto -->
             <div class="col-md-3 mb-3">
                 <h5>Contáctanos</h5>
-                <p>Secretaría de Turismo y Desarrollo de Pueblos Mágicos</p>
+                <p>Secretaría de Turismo </p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <p>Tel. (800) 000 0X X0</p>
             </div>
