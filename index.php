@@ -271,6 +271,11 @@ $result = $connectMySql->query($query);
 
           <!-- Descripción -->
           <p class="h6 text-white mt-3 mb-4"><?php echo $municipio['muni_cover_text']; ?></p>
+
+            <a href="municipios.php?id=<?php echo $municipio['muni_id']; ?>" class="btn btn-light fw-bold mt-2 px-4 py-2 rounded">
+                Ver más
+            </a>
+
         </div>
       </div>
       <?php endforeach; ?>

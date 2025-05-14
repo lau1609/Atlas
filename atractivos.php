@@ -145,7 +145,7 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
 </header>
 
 <!-- Banner Dinámico -->
-<section class="position-relative">
+<section class="position-relative fade-in">
     <div class="carousel-inner">
         <div>
             <img src="<?php echo $atractivo['gal_url']; ?>" alt="<?php echo $atractivo['atrac_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom"
@@ -184,7 +184,7 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
 
 
 <!-- Descripcion -->
-<section class="carrusel-atrac fancy-bg" style="background-color: <?php echo $colorFondo; ?>;">
+<section class="carrusel-atrac fade-in fancy-bg" style="background-color: <?php echo $colorFondo; ?>;">
 <h2 class="text-white text-center mb-4 fw-bold text-decoration-underline">Descripción</h2>
 <div class="container text-white col-md-12 mt">
     <p><?php echo $atractivo['atrac_desc']; ?></p>

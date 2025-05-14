@@ -36,7 +36,7 @@
     <div class="d-flex align-items-center justify-content-between mb-2">
         <div class="d-flex align-items-center">
             <i class="fas fa-map-marker-alt me-2"></i>
-            <label class="form-check-label" for="municipios">Municipios</label>
+            <label class="form-check-label" for="municipios">Atractivos Culturales</label>
         </div>
         <div class="form-check form-switch">
             <input type="checkbox" class="form-check-input" id="municipios" checked>
