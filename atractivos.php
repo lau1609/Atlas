@@ -57,7 +57,7 @@ $coloresPorRegion = [
   1 => 'rgb(227, 6, 19)',
   2 => 'rgb(92, 120, 18)',
   3 => 'rgb(149, 193, 31)',
-  4 => 'rgb(227, 6, 19)',
+  4 => 'rgb(250, 184, 0)',
   5 => 'rgb(230, 0, 126)',
   6 => 'rgb(0, 159, 227)',
   7 => 'rgb(112, 34, 131)'
@@ -116,7 +116,7 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
 }
 
 .btn-ver-mas {
-    background-color: #5C7812;
+    background-color: <?php echo $colorFondo; ?>;
     color: white;
     border: none;
     transition: all 0.3s ease-in-out;
@@ -127,9 +127,9 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
 }
 
 .btn-ver-mas:hover {
-    background-color: #3F560D;
+    background-color: <?php echo $colorFondo; ?>;
     transform: scale(1.1);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.18);
 }
 
 .imgfix img {
@@ -278,11 +278,11 @@ while ($row = $galeriaResult->fetch_assoc()) {
   <h2 class="text-white text-center mb-4 fw-bold">Más atractivos turísticos</h2>
 
   <!-- CARRUSEL -->
-  <<div id="carouselAtractivos" class="slick-carousel mt-5">
+  <div id="carouselAtractivos" class="slick-carousel mt-5">
 <?php while ($rel = $resultRelacionados->fetch_assoc()): ?>
   <div class="card h-100">
     <img src="<?php echo $rel['gal_url']; ?>" class="card-img-top card-image-fixed" alt="<?php echo $rel['atrac_name']; ?>">
-    <div class="card-body bg-success text-white text-center">
+    <div class="card-body text-grey text-center" style="">
       <p><i class="bi bi-geo-alt"></i> <?php echo $rel['muni_name']; ?></p>
       <h5 class="fw-bold"><?php echo $rel['atrac_name']; ?></h5>
       <a href="atractivos.php?id=<?php echo $rel['atrac_id']; ?>" class="btn-ver-mas mt-2 btn-sm">Ver más</a>
