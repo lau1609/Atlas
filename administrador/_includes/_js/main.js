@@ -144,7 +144,7 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
                         '</fieldset>'+
                         '<fieldset>' +
                             '<legend>Imágenes de galería <span style="font-size:.7rem">(máximo 3 imágenes)<span></legend>' +
-                            '<label class="__lk-fileInput">'+
+                            '<label class="__lk-fileInput galeria">'+
                                 '<span data-default="Elige archivos">Archivos</span>'+
                                 '<input id="file-input" name="images[]" type="file" accept="image/png, image/jpeg, image/jpg" multiple>'+
                             '</label>'+
@@ -474,12 +474,15 @@ $(document).ready(function() {
 
     
     $(document).on(clickHandler, '#addEditGal', function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
+        let cont = galery.length; 
+        let rest = 3 - cont;
         let id = $(this).attr('data-id');
         console.log('inserta el html');
-        $('.contImgGalery').html(
-                        '<label class="__lk-fileInput">'+
-                            '<span data-default="Elige archivos">Selecciona archivos (3 maximo)</span>'+
+        $('.alignEditImage').remove();
+        $('.contImgGalery').append(
+                        '<label class="__lk-fileInput galeria">'+
+                            '<span data-default="Elige archivos">Selecciona archivo(s) ('+rest+' máximo)</span>'+
                             '<input id="file-input" data-id="'+id+'" name="images[]" type="file" accept="image/png, image/jpeg, image/jpg" multiple>'+
                             '<input name="idGal" type="hidden" value="'+id+'">'+
                         '</label>'+
@@ -675,12 +678,45 @@ $(document).ready(function() {
        
     });
 
+    $(document).on(clickHandler, '.spanDelImg', function(e) {
+        let imgD = $(this).attr('data-img');
+        let id = $(this).attr('data-id');
+        console.log(imgD);
+        
+        galery = galery.filter(img => img !== imgD);
+        $(this).closest('.contImgGalDel').remove();
+        let cont = galery.length;
+        rest = 3 - cont;
+        console.log(galery);
+        if ($('.__lk-fileInput .galeria').length > 0) {
+            $('.__lk-fileInput .galeria').remove();
+            $('.contImgGalery').append(
+                        '<label class="__lk-fileInput galeria">'+
+                            '<span data-default="Elige archivos">Selecciona archivo(s) ('+rest+' máximo)</span>'+
+                            '<input id="file-input" data-id="'+id+'" name="images[]" type="file" accept="image/png, image/jpeg, image/jpg" multiple>'+
+                            '<input name="idGal" type="hidden" value="'+id+'">'+
+                        '</label>'+
+                        '<ul id="file-list"></ul> ');
+        }else{
+            if (document.getElementById('addEditGal')) {
+                console.log('ya existe');
+            } else {
+                if (galery.length < 3) {
+                    $('.contImgGalery').append('<div class="alignEditImage"><button id="addEditGal" data-id="'+id+'">Agregar</button/></div>');
+                }
+            }
+        }
+        
+    });
+
+    let galery = Array();
+
     $(document).on(clickHandler, '.editAtrac', function(e) {
         console.log('editar');
         let id = $(this).attr('data-id');
         console.log(id);
         let munId;
-        let galery = Array();
+        
         for (let i = 0; i < arrayPrin['atracs'].length; i++) {
             if (arrayPrin['atracs'][i]['id'] === id) {
                 console.log(arrayPrin['atracs'][i]['id']);
@@ -707,6 +743,7 @@ $(document).ready(function() {
                         '<label>Precio<input type="number" name="price" class="validate" value="'+arrayPrin['atracs'][i]['precio']+'" placeholder="Precio de entrada" id=""></label>'+
                         '<label>URL de Facebook<input type="text" name="face" placeholder="URL de Facebook" value="'+arrayPrin['atracs'][i]['face']+'" id=""></label>'+
                         '<label>URL de Instagram<input type="text" name="inst" placeholder="URL de Instagram" value="'+arrayPrin['atracs'][i]['inst']+'" id=""></label>'+
+                        // '<input type="hidden" name="gal" value="'+arrayPrin['atracs'][i]['urlImg']+'" id="">'+
                         '<label>Tipo de atractivo<select name="typAtrac">'+
                         '</select></label>'+
                         '<label>Municipio<select class="validate" name="muni">'+
@@ -729,31 +766,32 @@ $(document).ready(function() {
                     '</div>'+
                 '</div>'+
                 '</div>');
-
-                
                 let urlImg = arrayPrin['atracs'][i]['urlImg'];
 
                 // obtiene las imagenes 
                 if (urlImg && urlImg !== '') {
                     console.log(arrayPrin['atracs'][i]['urlImg']);
                     let valiText =  arrayPrin['atracs'][i]['urlImg'].indexOf(",");
+                    console.log(valiText);
                     if (valiText) {
                         galery = arrayPrin['atracs'][i]['urlImg'].split('***');
+                        console.log('el if');
+                        console.log(galery);
                     }else{
+                        console.log('el else');
+                        console.log(galery);
                         galery[0] = arrayPrin['atracs'][i]['urlImg']
                     }
-                    
                 }
             }
-
         }
-
-        // Inserta las imagenes de galeria
-
         if (galery.length > 0) {
-            $('.contImgGalery').append('<div class="alignEditImage"><button id="addEditGal" data-id="'+id+'">Editar</button/></div>');
+            console.log(galery);
+            if (galery.length< 3) {
+                $('.contImgGalery').append('<div class="alignEditImage"><button id="addEditGal" data-id="'+id+'">Agregar</button/></div>');
+            }
             for (let i = 0; i < galery.length; i++) {
-                $('.contImgGalery').append('<img src="'+galery[i]+'" alt="" />');
+                $('.contImgGalery').append('<div class="contImgGalDel"><img src="'+galery[i]+'" alt="" /><span data-id="'+id+'" data-img="'+galery[i]+'" class="pointer spanDelImg">X</span></div>');
             }
         }else{
             $('.contImgGalery').append('<p>No hay imagenes de galeria</p> <button data-id="'+id+'" id="addEditGal">Agregar</button/');
@@ -881,8 +919,10 @@ $(document).ready(function() {
     console.log('hk');
     let files = Array.from(event.target.files); 
     let fileList = $('#file-list');
-    if (files.length > 3) {
-        alert("Solo puedes subir un máximo de 3 imágenes.");
+    let cont = galery.length;
+    rest = 3 - cont;
+    if (files.length > rest) {
+        alert(`Solo puedes subir un máximo de ${rest} imágenes.`);
         $(this).val(""); 
         fileList.empty(); 
         return;
@@ -904,6 +944,7 @@ $(document).ready(function() {
             fileList.append(li);
         }
     });
+    $('.__lk-fileInput .galeria').css('display', 'none');
     $('.remove-file').on('click', function () {
         let indexToRemove = $(this).data('index');
         files.splice(indexToRemove, 1);
@@ -1257,6 +1298,8 @@ $(document).on('submit','#formEditImage',function(e){
             $inputs.prop("disabled", true);
             formData.append("validateAddAtrac", true);
             formData.append("editAddAtrac", true);
+            let textoPlano = galery.join('***');
+            formData.append("gal", textoPlano);
             for (var pair of formData.entries()) {
                 console.log(pair);
             }
