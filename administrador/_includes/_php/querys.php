@@ -4,91 +4,6 @@ include_once("../../Connections/config.php");
 
 
 
-
-
-if ($_POST['viewComen'] == 'true') {
-    // echo 'entro';
-    
-    $id = $_POST['id'];
-    $query_rsQueryComen = sprintf("SELECT *
-       FROM comentarios_tb 
-       WHERE comen_pres_id = $id");
-   $rsQueryComen = mysqli_query($GLOBALS['connectMySql'], $query_rsQueryComen);
-   $row_rsQueryComen = mysqli_fetch_assoc($rsQueryComen);
-   $totalRows_rsQueryComen = mysqli_num_rows($rsQueryComen);
-
-   $queryComen = array();
-    if ($totalRows_rsQueryComen > 0) {
-        do{ 
-            array_push($queryComen, array(
-                'texto' => $row_rsQueryComen['comen_text'],
-                'fecha' => $row_rsQueryComen['comen_fecha'],
-                'hora' => $row_rsQueryComen['comen hora']
-            ));
-        } while ($row_rsQueryComen = mysqli_fetch_assoc($rsQueryComen));
-        print_r(json_encode($queryComen));
-        exit;
-    }
-}
-
-if ($_POST['cancel'] == 'true') {
-    $id = $_POST['id'];
-    $vehi = $_POST['vehi'];
-    // echo $vehi;
-    // exit;
-    $sql = "UPDATE prestamos_tb
-            SET pres_status = 3
-            WHERE pres_id = $id";
-
-    $sql2 = "UPDATE vehiculos_tb
-            SET vehi_status = 1
-            WHERE vehi_id = $vehi";
-
-            if ($_POST['comen']) {
-                $comen = $_POST['comen'];
-                comentarios($id, $comen, $connectMySql);
-            }
-    // exit;
-    if (mysqli_query($connectMySql, $sql) && mysqli_query($connectMySql, $sql2)) {
-        echo 'successful';
-    }
-}
-if ($_POST['initCalen'] == 'true') {
-
-    
-    $query_rsQueryPresCalen = sprintf("SELECT * FROM prestamos_tb p
-                                JOIN vehiculos_tb v
-                                ON p.pres_id_vehi = vehi_id");
-    $rsQueryPresCalen = mysqli_query($GLOBALS['connectMySql'], $query_rsQueryPresCalen);
-    $row_rsQueryPresCalen = mysqli_fetch_assoc($rsQueryPresCalen);
-    $totalRows_rsQueryPresCalen = mysqli_num_rows($rsQueryPresCalen);
-    $queryPresCalen = array();
-
-    if ($totalRows_rsQueryPresCalen > 0) {
-        do {
-            array_push($queryPresCalen, array(
-                'ini' => $row_rsQueryPresCalen['pres_fec_ini'].'T'.$row_rsQueryPresCalen['pres_hor_ini'],
-                'fin' => $row_rsQueryPresCalen['pres_fec_fin'].'T'.$row_rsQueryPresCalen['pres_hor_fin'],
-                'dest' => $row_rsQueryPresCalen['pres_destino'],
-                'user' => $row_rsQueryPresCalen['pres_folio_emp'],
-                'folio' => $row_rsQueryPresCalen['pres_folio'],
-                'det' => $row_rsQueryPresCalen['pres_det'],
-                'stat' => $row_rsQueryPresCalen['pres_status'],
-                'vehi' => $row_rsQueryPresCalen['vehi_name'],
-                'placas' => $row_rsQueryPresCalen['vehi_placas'],
-                'color' => $row_rsQueryPresCalen['vehi_color'],
-                'vehi_id' => $row_rsQueryPresCalen['vehi_id']
-            ));
-        } while ($row_rsQueryPresCalen = mysqli_fetch_assoc($rsQueryPresCalen));
-
-        print_r(json_encode($queryPresCalen));
-        // print_r(json_encode($queryEmp));
-        // var_dump($queryEmp);
-        // echo '-------------------------------';
-    }
-}
-
-
 if ($_POST['images'] == 'true') {
 // ini_set("display_errors",1);
 // error_reporting(E_ALL);
@@ -188,7 +103,6 @@ if ($_POST['validateAddMuni'] == 'true') {
 
 
 if ($_POST['editImage']) {
-
     $id = $_POST['id'];
     $typ_id = $_POST['typ_id'];
     if ($_POST['url']) {
@@ -325,7 +239,7 @@ if ($_POST['typAtrac'] == 'true') {
 if ($_POST['validateAddAtrac'] == 'true') {
     // ini_set("display_errors",1);
     // error_reporting(E_ALL);
-    //var_dump($_POST);
+    // var_dump($_POST);
     $name = $_POST['name'];
     $desc = $_POST['desc'];
     $temp = $_POST['temp'];
@@ -344,6 +258,8 @@ if ($_POST['validateAddAtrac'] == 'true') {
     $descShort = $_POST['descShort'];
     $lat = $_POST['lat'];
     $long = $_POST['long'];
+    $galExis = $_POST['gal'];
+    $id = $_POST['idGal'];
     $pathPor = '';
     $pathGal = '';
     if (isset($_FILES['imagen'])) {
@@ -355,7 +271,8 @@ if ($_POST['validateAddAtrac'] == 'true') {
     }
 
     if (isset($_FILES['imagenes'])) {
-        $cont = 0;
+        $today = date("Y-m-d H:i:s");
+        $cont = preg_replace('/[-:\s]/', '', date("Y-m-d H:i:s"));
         $nombresImagenes = []; 
         foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
             $cont++;
@@ -366,37 +283,41 @@ if ($_POST['validateAddAtrac'] == 'true') {
             move_uploaded_file($tmp_name,$_SERVER['DOCUMENT_ROOT'] .'/atlas/administrador/_images/imgAtractivos/' . $_POST['name'].$cont. '.'.$fileExtension);
             $nombresImagenes[] = $nombreArchivo;
         }
-        $pathGal = implode('***', $nombresImagenes);
-        // echo $pathGal;
+        if ($galExis != '') {
+            $imgs = implode('***', $nombresImagenes);
+            $pathGal = $galExis.'***'.$imgs;
+        }else{
+            $pathGal = implode('***', $nombresImagenes);
+        }
     }
-
-    
 
     if ($_POST['editAddAtrac']) {
         $id = $_POST['id'];
 
-        // verifica si hay portadas previas
         $query_rsQueryPort = sprintf("SELECT * FROM gallery_tb
-        WHERE (gal_dif = '$idPort' AND gal_type = 3);");
+        WHERE (gal_dif = '$id' AND gal_type = 3);");
         $rsQueryPort = mysqli_query($GLOBALS['connectMySql'], $query_rsQueryPort);
         $row_rsQueryPort = mysqli_fetch_assoc($rsQueryPort);
         $totalRows_rsQueryPort = mysqli_num_rows($rsQueryPort);
+        // exit;
         if ($totalRows_rsQueryPort > 0 ) {
-            $sql3 = "UPDATE gallery_tb SET gal_url = '$pathPor', gal_type = '3' 
-                WHERE gal_dif = '$id'";
+                $sql3 = "UPDATE gallery_tb SET gal_url = '$pathPor'
+                WHERE gal_dif = '$id' and gal_type = '3' ";
+            
         }else{
             $sql3 = "INSERT INTO gallery_tb (gal_url, gal_type, gal_dif) VALUES ('$pathPor' , '3','$id')";
         }
 
-        // verifica si hay galeria previa
+
         $query_rsQueryGal = sprintf("SELECT * FROM gallery_tb
-        WHERE (gal_dif = '$idPort' AND gal_type = 2);");
+        WHERE (gal_dif = '$id' AND gal_type = 2);");
         $rsQueryGal = mysqli_query($GLOBALS['connectMySql'], $query_rsQueryGal);
         $row_rsQueryGal = mysqli_fetch_assoc($rsQueryGal);
         $totalRows_rsQueryGal = mysqli_num_rows($rsQueryGal);
         if ($totalRows_rsQueryGal > 0 ) {
-            $sql4 = "UPDATE gallery_tb SET gal_url = '$pathGal', gal_type = '2' 
-                WHERE gal_dif = '$id'";
+                $sql4 = "UPDATE gallery_tb SET gal_url = '$pathGal' 
+                WHERE gal_dif = '$id' and gal_type = '2' ";
+            
         }else{
             $sql4 = "INSERT INTO gallery_tb (gal_url, gal_type, gal_dif) VALUES ('$pathGal' , '2','$id')";
         }
@@ -423,6 +344,13 @@ if ($_POST['validateAddAtrac'] == 'true') {
         $sql2 = "INSERT INTO atractivos_tb (atrac_muni_id, atrac_type, atrac_reg_id, atrac_name, atrac_cover_text, atrac_desc, atrac_latitud, atrac_longitud, atrac_direcc, atrac_horario, atrac_mail, atrac_tel, atrac_price, atrac_soc_face, atrac_soc_inst) 
         VALUES ('$muni', '$typAtrac', '$region', '$name', '$descShort', '$desc', '$lat', '$long', '$dir', '$hor', '$mail', '$tel', '$price', '$face', '$inst')";
     }
+    // echo $sql3;
+    // echo '-------------';
+    // echo $sql2;
+    // echo '-------------';
+    // echo $sql4;
+    // echo '-------------';
+    // exit;
 
     if ($connectMySql->query($sql2) === TRUE) {
         $last_id = $connectMySql->insert_id; 
@@ -430,6 +358,7 @@ if ($_POST['validateAddAtrac'] == 'true') {
             if ($_POST['editAddAtrac'] != true) {
                 $sql3 = "INSERT INTO gallery_tb (gal_url, gal_type, gal_dif) VALUES ('$pathPor' , '3','$last_id')";
             }
+            // exit;
             if ($connectMySql->query($sql3) === TRUE) {
             }
         }
@@ -440,13 +369,18 @@ if ($_POST['validateAddAtrac'] == 'true') {
             if ($connectMySql->query($sql4) === TRUE) {
             }
         }
+        // echo $pathGal;
+        // echo $pathPor;
+        // echo $sql3;
+        // echo $sql4;
         
        echo 'succesfull';
     } else {
         echo "Error en el INSERT: " . $connectMySql->error;
     }
-    
 }
+
+
 if ($_POST['municipios'] == 'true') {
     // ini_set("display_errors",1);
     // error_reporting(E_ALL);

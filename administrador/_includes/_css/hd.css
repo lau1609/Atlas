@@ -860,8 +860,24 @@ legend {
     border: 1px solid rgb(0, 0, 0, .1);
 }
 .contImgGalery img {
-    width: 37%;
+    width: 100%;
+    /* margin: 15px; */
+}
+.contImgGalDel{
+    width: 40%;
+    position: relative;
     margin: 15px;
+}
+.spanDelImg{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    border-radius: 15px;
+    background-color: white;
+    padding: 2px 8px;
+    color: red;
+    font-weight: 900;
+    box-shadow: 0px 0px 12px rgb(0, 0, 0, .2);
 }
 .contImgPort img{
     height: 200px;
