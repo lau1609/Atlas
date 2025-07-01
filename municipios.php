@@ -128,7 +128,7 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
 }
 
 .btn-ver-mas {
-    background-color: #5C7812;
+    background-color: <?php echo $colorFondo; ?>;
     color: white;
     border: none;
     transition: all 0.3s ease-in-out;
@@ -139,7 +139,7 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
 }
 
 .btn-ver-mas:hover {
-    background-color: #3F560D;
+    background-color: <?php echo $colorFondo; ?>;
     transform: scale(1.1);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -155,10 +155,10 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
 <?php include_once("phpAssets/header.php"); ?>
 </header>
 
-<section class="position-relative">
+<section class="position-relative fade-in">
   <div class="carousel-inner">
     <div>
-      <img src="<?php echo $bannerImage; ?>" alt="<?php echo $municipio['muni_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom" style="object-fit: cover;">
+      <img src="administrador/<?php echo $bannerImage; ?>" alt="<?php echo $municipio['muni_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom" style="object-fit: cover;">
       <div class="banner-overlay"></div>
 
       <div class="banner-content d-flex flex-column align-items-center justify-content-center position-absolute top-50 start-50 translate-middle text-center p-3" style="z-index: 2; width: 100%;">
@@ -197,7 +197,7 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
     <!-- Clima y Temperatura -->
     <div class="col-md-4 mb-4 card_anim">
       <div class="card border-0 shadow">
-        <div class="card-body">
+        <div class="card-body" style="align-items: center;">
           <img src="_images/SVG/icono_clima.svg" alt="Icono Clima" class="mb-3" style="width: 60px;">
           <h5 class="card-title">Clima y Temperatura</h5>
           <p class="card-text">
@@ -210,7 +210,7 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
     <!-- Cultura -->
     <div class="col-md-4 mb-4 card_anim">
       <div class="card border-0 shadow">
-        <div class="card-body">
+        <div class="card-body" style="align-items: center;">
           <img src="_images/SVG/icono_cultura.svg" alt="Icono Cultura" class="mb-3" style="width: 50px;">
           <h5 class="card-title">Cultura</h5>
           <p class="card-text">
@@ -223,7 +223,7 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
     <!-- Naturaleza -->
     <div class="col-md-4 mb-4 card_anim">
       <div class="card border-0 shadow">
-        <div class="card-body">
+        <div class="card-body" style="align-items: center;">
           <img src="_images/SVG/icono_naturaleza.svg" alt="Icono Naturaleza" class="mb-3" style="width: 40px;">
           <h5 class="card-title">Naturaleza</h5>
           <p class="card-text">
@@ -238,13 +238,13 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
   <section class="carrusel-atrac fade-in fancy-bg" style="background-color: <?php echo $colorFondo; ?>;">
   <<!-- CARRUSEL -->
   <div class="container mt-5 " style="max-width:1500px;">
-    <h2 class="text-white text-center mb-4 fw-bold">Más atractivos turísticos</h2>
+    <h2 class="text-white text-center mb-4 fw-bold">Más atractivos turísticos en <?php echo $municipio['muni_name']; ?></h2>
 
     <div id="carouselAtractivos" class="slick-carousel mt-5">
       <?php while ($rel = $resultRelacionados->fetch_assoc()): ?>
         <div class="card h-100">
-          <img src="<?php echo $rel['gal_url']; ?>" class="card-img-top card-image-fixed" alt="<?php echo $rel['atrac_name']; ?>">
-          <div class="card-body bg-success text-white text-center">
+          <img src="administrador/<?php echo $rel['gal_url']; ?>" class="card-img-top card-image-fixed" alt="<?php echo $rel['atrac_name']; ?>">
+          <div class="card-body text-grey text-center">
             <p><i class="bi bi-geo-alt"></i> <?php echo $rel['muni_name']; ?></p>
             <h5 class="fw-bold"><?php echo $rel['atrac_name']; ?></h5>
             <a href="atractivos.php?id=<?php echo $rel['atrac_id']; ?>" class="btn-ver-mas mt-2 btn-sm">Ver más</a>
@@ -272,6 +272,29 @@ $colorFondo = $coloresPorRegion[$municipio['muni_reg_id']] ?? '#5C7812'; // fall
 
     <!-- Slick JS -->
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+          $('#carouselAtractivos').slick({
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              autoplay: true,
+              autoplaySpeed: 2000,
+              arrows: true,
+              dots: false,
+              responsive: [
+                  {
+                      breakpoint: 768,
+                      settings: { slidesToShow: 2 }
+                  },
+                  {
+                      breakpoint: 480,
+                      settings: { slidesToShow: 1 }
+                  }
+              ]
+          });
+      });
+    </script>
 
 </body>
 </html>

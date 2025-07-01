@@ -1,3 +1,22 @@
+<?php
+
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+
+include_once("Connections/connectMySql.php");
+
+
+// Traer las categorías de atractivos
+$queryTipos = "SELECT * FROM type_atrac_tb";
+$resultTipos = $connectMySql->query($queryTipos);
+
+// Traer los municipios
+$queryMunicipios = "SELECT muni_id, muni_name FROM municipios_tb ORDER BY muni_name";
+$resultMunicipios = $connectMySql->query($queryMunicipios);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,32 +24,18 @@
   <title>Catálogo de Ubicaciones - Atlas</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
-    .card img {
-        height: 180px; /* Tamaño fijo para las imágenes */
-        object-fit: cover; /* Para que no se deformen */
-    }
-    #sidebar {
-        width: 280px;
-        overflow-y: auto;
-    }
+
     footer {
         margin-top: auto; /* Asegura que el footer esté en la parte inferior */
     }
-    .main-content {
-        flex-grow: 1; /* Asegura que el contenido ocupe el espacio restante */
-    }
-    
+
     body {
     display: flex;
     flex-direction: column;
-    min-height: 120vh;
+    }
 
-    .card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Hace que las tarjetas se acomoden */
-    gap: 15px; /* Espaciado entre tarjetas */
-    padding: 20px;
-}
+    
+
 
 .card {
     background: white;
@@ -39,6 +44,7 @@
     padding: 15px;
     text-align: center;
     transition: transform 0.2s ease-in-out;
+    
 }
 
 .card:hover {
@@ -46,10 +52,13 @@
 }
 
 .card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+  height: 350px;
+  max-width: 500px;
+  object-fit: cover;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
+
 
 .card-title {
     font-size: 18px;
@@ -61,66 +70,177 @@
     font-size: 14px;
     color: #555;
 }
+
+#sidebar {
+  transition: margin-left 0.400s ease;
+  width: 300px;
+  height: 100%;
+  text-align: center;
+  z-index: 3;
+  background-color: #494949;
+  position: absolute;
 }
-main {
-    flex-grow: 1;
-    min-height: 115vh
+
+.toggle-sidebar-btn2 {
+  position: absolute;
+  top: 50%;
+  left: 295px; /* se sale justo al borde del sidebar */
+  transform: translateY(-50%);
+  z-index: 20;
+  background-color: #494949;
+  border: none;
+  width: 42px;
+  height: 150px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: left 0.4s ease;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+
 }
+
+.toggle-sidebar-btn2 p {
+  color: white;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+ }
+
+ .toggle-sidebar-btn2 {
+  left: 295px;
+  transition: left 0.400s ease; 
+}
+
+/* Responsivo en móvil */
+@media (max-width: 768px) {
+  #sidebar {
+  transition: margin-left 0.400s ease;
+  width: 250px;
+  height: 100%;
+  text-align: center;
+  background-color: #494949;
+  position: absolute;
+}
+
+.toggle-sidebar-btn2 {
+  left: 245px;
+  transition: left 0.400s ease; 
+}
+
+  .toggle-sidebar-btn2 {
+    /*left: 0 !important;*/
+    top: 300px;
+    transform: none;
+    z-index: 1001;
+    left: 245px;
+  }
+
+  .cont_cards{
+ margin-left: 0% !important;
+
+}
+
+.card img {
+  height: 150px;
+  max-width: 500px;
+  object-fit: cover;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+#atractivosContainer {
+    max-height: 80vh; /* Ajusta según lo que quieras mostrar */
+    overflow-y: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 0 !important; /* Corrige el desmadre del margen */
+}
+
+}
+
+.cont_cards{
+ margin-left: 10%;
+
+}
+
+
+
+
   </style>
 </head>
-<body class="d-flex flex-column min-vh-110">
+<body>
   <header>
     <?php include_once("phpAssets/header.php"); ?>
   </header>
   
-  <main class="d-flex flex-grow-1" style="min-height: 100em;">
-    <!-- Sidebar del mapa -->
-    <div id="sidebar" class="card p-3 shadow-lg text-white" style="background-color: #494949; width: 300px; height: 100%;">
-      <h2 class="text-white mt-5 mb-4">Ubicación</h2>
-      <select id="locationFilter" class="form-select mb-3" style="background-color: #1F1E1E; color: #FFFFFF;">
-        <option value="all">Ver todas</option>
-        <option value="bocoyna">Bocoyna</option>
-      </select>
-
-      <h2 class="text-white mt-4 mb-4">Categorías</h2>
-      <div class="d-flex align-items-center justify-content-between mb-2">
-        <div class="d-flex align-items-center">
-          <i class="fas fa-landmark me-2"></i>
-          <label class="form-check-label" for="atractivos">Atractivos Turísticos</label>
-        </div>
-        <div class="form-check form-switch">
-          <input type="checkbox" class="form-check-input" id="atractivos" checked>
-        </div>
+  <main class="d-flex fade-in" style="height: auto;">
+  <!-- Sidebar -->
+  <div id="sidebar" class="p-3 shadow-lg text-white sidebar transition-sidebar">
+    <!-- Filtro de Regiones -->
+    <h2 class="text-white mt-5 mb-4">Región Turística</h2>
+    <select id="regionFilter" class="form-select mb-3" style="cursor: pointer; background-color: #1F1E1E; color: #FFFFFF;">
+      <option value="all">Todas las regiones</option>
+      <?php
+        include_once("Connections/connectMySql.php");
+        $resultRegiones = $connectMySql->query("SELECT reg_id, reg_name FROM regiones_tb ORDER BY reg_name ASC");
+        while ($row = $resultRegiones->fetch_assoc()) {
+            echo "<option value='{$row['reg_id']}'>{$row['reg_name']}</option>";
+        }
+      ?>
+    </select>  
+<!-- Filtro de Municipios -->
+  <h2 class="text-white mt-5 mb-4">Municipio</h2>
+  <select id="locationFilter"  class="form-select mb-3" style="cursor: pointer; background-color: #1F1E1E; color: #FFFFFF;">
+    <option value="all">Todos los municipios</option>
+      <?php
+        include_once("Connections/connectMySql.php");
+        $resultMunis = $connectMySql->query("SELECT muni_id, muni_name FROM municipios_tb ORDER BY muni_name ASC");
+        while ($row = $resultMunis->fetch_assoc()) {
+            echo "<option value='{$row['muni_id']}'>{$row['muni_name']}</option>";
+        }
+      ?>
+  </select>
+<!-- Filtro tipo de Atractivo -->
+  <h2 class="text-white mt-5 mb-4">Categorías</h2>
+  <?php while ($tipo = $resultTipos->fetch_assoc()): ?>
+    <div class="d-flex align-items-center justify-content-between mb-2" style="cursor: pointer;">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-map-pin me-2"></i>
+        <label class="form-check-label" for="tipo_<?php echo $tipo['id_typ_atrac']; ?>"><?php echo $tipo['name_typ_atrac']; ?></label>
       </div>
-      <div class="d-flex align-items-center justify-content-between mb-2">
-        <div class="d-flex align-items-center">
-          <i class="fas fa-map-marker-alt me-2"></i>
-          <label class="form-check-label" for="municipios">Municipios</label>
-        </div>
-        <div class="form-check form-switch">
-          <input type="checkbox" class="form-check-input" id="municipios" checked>
-        </div>
-      </div>
-      <div class="d-flex align-items-center justify-content-between mb-2">
-        <div class="d-flex align-items-center">
-          <i class="fas fa-calendar-alt me-2"></i>
-          <label class="form-check-label" for="pueblos">Atractivos naturales</label>
-        </div>
-        <div class="form-check form-switch">
-          <input type="checkbox" class="form-check-input" id="pueblos" checked>
-        </div>
-      </div>
-
-      <button onclick="showAllMarkers()" class="btn btn-success w-100 mt-5">Ver todas las locaciones</button>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" id="tipo_<?php echo $tipo['id_typ_atrac']; ?>" checked>
+      </div>  
     </div>
+  <?php endwhile; ?>
 
-<!-- Contenedor principal de contenido -->
-<div class="flex-grow-1 d-flex fade-in flex-column" style="min-height: 100%; background-image: url('_images/textura_chihuahua_es_para_ti.svg');  background-repeat: repeat; background-color: rgba(255, 255, 255, 0.85); background-blend-mode: overlay;">
-    <div id="atractivosContainer" class="container flex-grow-1 d-flex flex-wrap gap-3 p-3 justify-content-center" style="max-width: 130em"></div>
-    <!-- Contenedor para la paginación -->
-    <div id="paginationContainer" class="d-flex justify-content-center my-3"></div>
+     <!-- Boton ocultar filtros -->
+<button id="toggleSidebar" class="toggle-sidebar-btn2">
+  <p class="toggle-btn-text"> Filtros </p>
+  <img src="_images/SVG/filter_icono.svg" alt="Filtrar" width="20">
+</button>
+
+ <!-- Boton Borrar filtros -->
+  <button id="resetFilters" class="btn btn-outline-light w-100 mt-2">Borrar filtros</button>
+
+
+
 </div>
 
+
+  <!-- Contenedor de resultados -->
+  <div class="flex-grow-1 d-flex fade-in flex-column container-fluid" style="min-height: 100%; background-image: url('_images/textura_chihuahua_es_para_ti.svg');  background-repeat: repeat; background-color: rgba(255, 255, 255, 0.85); background-blend-mode: overlay;">
+    <div id="noResults" class="text-center fw-bold text-danger display-4 mt-4 fade-in" style="display: none;">
+      No se encontraron resultados.
+    </div>
+    <div id="atractivosContainer" class="row container flex-grow-1 d-flex flex-wrap gap-1 p-3 justify-content-center cont_cards" style="max-width: 130em;"></div>
+    <div id="paginationContainer" class="d-flex justify-content-center my-3"></div>
+  </div>
 </main>
 
   
@@ -160,7 +280,158 @@ main {
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Primero carga Bootstrap bien -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Luego defines el array de municipios -->
+<script>
+  const municipios = <?php
+    $allMunis = [];
+    $resultAll = $connectMySql->query("SELECT muni_id, muni_name, muni_reg_id FROM municipios_tb");
+    while ($row = $resultAll->fetch_assoc()) {
+        $allMunis[] = $row;
+    }
+    echo json_encode($allMunis);
+  ?>;
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("sidebar");
+    const toggleBtn = document.querySelector(".toggle-sidebar-btn2");
+
+    // Detectar si ya estamos en versión móvil al cargar
+    if (window.innerWidth < 768) {
+      sidebar.classList.add("collapsed");
+      document.body.classList.add("sidebar-collapsed");
+    }
+
+    // Detectar cambios de tamaño (opcional, para hacerlo más dinámico)
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 768) {
+        sidebar.classList.add("collapsed");
+        document.body.classList.add("sidebar-collapsed");
+      } else {
+        sidebar.classList.remove("collapsed");
+        document.body.classList.remove("sidebar-collapsed");
+      }
+    });
+
+    // Función del botón
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+      document.body.classList.toggle("sidebar-collapsed");
+    });
+  });
+</script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const sidebar = document.getElementById("sidebar");
+  const toggleBtn = document.querySelector(".toggle-sidebar-btn2");
+
+  // Función para colapsar el sidebar
+  function collapseSidebar() {
+    sidebar.classList.add("collapsed");
+    document.body.classList.add("sidebar-collapsed");
+  }
+
+  // Función para expandir el sidebar
+  function expandSidebar() {
+    sidebar.classList.remove("collapsed");
+    document.body.classList.remove("sidebar-collapsed");
+  }
+
+  // Al cargar, si es móvil, colapsar
+  if (window.innerWidth < 768) {
+    collapseSidebar();
+  }
+
+  //  Evento de resize (por si se cambia el tamaño manualmente)
+  window.addEventListener("resize", () => {
+    if (window.innerWidth < 768) {
+      collapseSidebar();
+    } else {
+      expandSidebar();
+    }
+  });
+
+  // Toggle al presionar el botón
+  toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // evitar conflicto con document click
+
+    if (sidebar.classList.contains("collapsed")) {
+      expandSidebar();
+    } else {
+      collapseSidebar();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const isMobile = window.innerWidth < 768;
+    const clickedInsideSidebar = sidebar.contains(e.target);
+    const clickedButton = toggleBtn.contains(e.target);
+
+    if (isMobile && !clickedInsideSidebar && !clickedButton) {
+      collapseSidebar();
+    }
+  });
+});
+
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("sidebar");
+    const toggleBtn = document.getElementById("toggleSidebar2");
+
+    function collapseSidebar() {
+      sidebar.classList.add("collapsed");
+      document.body.classList.add("sidebar-collapsed");
+    }
+
+    function expandSidebar() {
+      sidebar.classList.remove("collapsed");
+      document.body.classList.remove("sidebar-collapsed");
+    }
+
+    if (window.innerWidth < 768) {
+      collapseSidebar();
+    }
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 768) {
+        collapseSidebar();
+      } else {
+        expandSidebar();
+      }
+    });
+
+    toggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (sidebar.classList.contains("collapsed")) {
+        expandSidebar();
+      } else {
+        collapseSidebar();
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      const isMobile = window.innerWidth < 768;
+      const clickedInsideSidebar = sidebar.contains(e.target);
+      const clickedButton = toggleBtn.contains(e.target);
+
+      if (isMobile && !clickedInsideSidebar && !clickedButton) {
+        collapseSidebar();
+      }
+    });
+  });
+</script>
+
+
+
+
+
 </body>
 
 

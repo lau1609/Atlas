@@ -74,27 +74,17 @@ while ($muni = $resultMunicipios->fetch_assoc()) {
     object-fit: cover;
     z-index: 0;
 }
-.logo-container {
-            height: 150px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background-color: #f8f9fa;
-        }
-        .logo {
-            width: 130px;
-            transition: transform 0.3s ease;
-        }
-        .logo:hover {
-            transform: scale(1.1);
-        }
-.img-fixed {
-    width: 70px; /* Ancho fijo */
+
+
+            
+.img-fixed { /* imagen tarjetas de atractivos */
+    width: 300px; /* Ancho fijo */
     height: 350px; /* Alto fijo */
-    object-fit: cover; /* Mantiene la proporción sin deformar */
-    display: block; /* Asegura un buen comportamiento en el layout */
+    object-fit: cover; /* para que no se deformeee */
+
     margin: 0 auto; /* Opcional: Centra la imagen */
 }
+
 
 </style>
 </header>
@@ -133,15 +123,13 @@ while ($muni = $resultMunicipios->fetch_assoc()) {
         </div>
         <!-- Contenedor de Imagen -->
         <div class="col-md-6 order-md-2 text-center" style="max-width: 30em;">
-            <img src="_images/catedral2.jpg" alt="Catedral de Chihuahua" style="max-width: 18em;" class="img-fluid rounded">
+            <img src="_images/mapa_atlas.jpg" alt="Catedral de Chihuahua" styldfbdzbde="max-width: 20em;" class="img-fluid rounded">
             <!-- Botón debajo de la imagen -->
             <div class="mt-3">
-                <a href="map.php" class="btn btn-light border shadow-sm px-4 py-2 d-inline-flex align-items-center" style="border-radius: 12px;">
+                <a href="map.php" class="btn btn-success border shadow-sm px-4 py-2 d-inline-flex align-items-center" style="border-radius: 12px;">
                     <!-- Ícono SVG -->
-                    <span class="me-2 d-flex justify-content-center align-items-center" style="width: 24px; height: 24px; border-radius: 50%; background-color: #f0f0f0;">
-                        <img src="_images/SVG/bx_map.svg" alt="Ícono de mapa" style="width: 16px; height: 16px;">
-                    </span>
-                    Navega por el mapa
+                        <img src="_images\SVG\map-marker.svg" alt="Ícono de mapa" style="width: 16px; height: 16px; color:white">
+                     Navega por el mapa
                 </a>
             </div>
         </div>
@@ -149,94 +137,55 @@ while ($muni = $resultMunicipios->fetch_assoc()) {
 </section>
 
 
-<!-- Sección Atractivos Turísticos -->
+<!-- Sección Atractivos Turísticos carrusel -->
 <section class="py-5" style="background-color: #F4E8D9;">
-    <div class="container">
-        <sectio class="row">
-            <!-- Tarjeta de texto introductorio -->
-            <div class="col-md-3 mb-3">
-                <div style="background-color: #F4E8D9;">
-                    <div>
-                        <h5 class="card-title" style="padding-bottom: 10px">Explora Chihuahua</h5>
-                        <h2 class="mb-4">Atractivos Turísticos</h2>
-                        <hr>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id posuere ex, vel scelerisque velit. In quis felis sit amet tellus congue mollis. Suspendisse mollis risus dictum metus dignissim, vitae pharetra massa auctor.
-                        </p>
-                        <br>
-                        Quisque neque ante, lacinia id lectus vitae, ultrices rhoncus nibh. Quisque luctus hendrerit sem.
-
-                    </div>
-                    <a href="atrac_cards.php" class="btn btn-success mt-4">Descubre mas atractivos</a>
-                </div>
-            </div>
-<!-- Carrusel -->
-<?php
-include_once("Connections/connectMySql.php");
-
-// Consulta para obtener los atractivos
-$query = "SELECT 
-    atractivos_tb.atrac_name,  
-    municipios_tb.muni_name,
-    atractivos_tb.atrac_cover_text,
-    gallery_tb.gal_url
-FROM 
-    atractivos_tb
-JOIN 
-    gallery_tb ON atractivos_tb.atrac_id = gallery_tb.gal_dif
-JOIN 
-    municipios_tb ON atractivos_tb.atrac_muni_id = municipios_tb.muni_id
-WHERE  
-    gallery_tb.gal_type = 3  
-ORDER BY RAND();"; // Agregado para aleatorizar los resultados
-
-
-
-
-$result = $connectMySql->query($query);
-?>
-
-<div class="col-md-9">
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <?php
-            $counter = 0; // Contador para agrupar las tarjetas
-            while ($row = $result->fetch_assoc()) {
-                if ($counter % 3 == 0) {
-                    // Abre un nuevo grupo de tarjetas cada 3
-                    echo '<div class="carousel-item ' . ($counter === 0 ? 'active' : '') . '">';
-                    echo '<div class="row">';
-                }
-            ?>
-                    <div class="col-md-4">
-                        <div class="card rounded-lg" style="background-color: #F4E8D9;">
-                            <img src="<?php echo $row['gal_url']; ?>" alt="<?php echo $row['atrac_name']; ?>" class="card-img-top img-fixed">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo $row['atrac_name']; ?></h5>
-                                <div style="display: flex; align-items: center; gap: 5px;">
-                                    <img src="_images/SVG/bx_map.svg" alt="Ícono de mapa" style="width: 16px; height: 16px;">
-                                    <p class="card-text m-0"><?php echo $row['muni_name']; ?></p>
-                                </div>
-                                <p class="card-text m-0"><?php echo $row['atrac_cover_text']; ?></p>
-                            </div>
-                        </div>
-                    </div>
-            <?php
-                $counter++;
-                if ($counter % 3 == 0) {
-                    // Cierra el grupo de tarjetas después de cada 3
-                    echo '</div></div>';
-                }
-            }
-            if ($counter % 3 != 0) {
-                // Cierra el grupo si el número total no es múltiplo de 3
-                echo '</div></div>';
-            }
-            ?>
+  <div class="container">
+    <div class="row">
+      <!-- Columna de introducción -->
+      <div class="col-md-3 mb-3">
+        <div style="background-color: #F4E8D9;">
+          <h5 class="fw-bold text-start mb-2">Explora Chihuahua</h5>
+          <h2 class="mb-4">Atractivos Turísticos</h2>
+          <hr>
+          <p class="card-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id posuere ex, vel scelerisque velit. In quis felis sit amet tellus congue mollis. Suspendisse mollis risus dictum metus dignissim, vitae pharetra massa auctor sit amet tellus congue mollis. Suspendisse mollis risus dictum metus dignissim, vitae pharetra massa auctor sit amet tellus congue mollis. Suspendisse mollis risus dictum metus dignissim, vitae pharetra massa auctor.
+          </p>
+          <br>
+          Quisque neque ante, lacinia id lectus vitae, ultrices rhoncus nibh. Quisque luctus hendrerit sem.
+          <a href="atrac_cards.php" class="btn btn-success mt-4 d-block">Descubre más atractivos</a>
         </div>
-    </div>
-</div>
+      </div>
 
+      <!-- Carrusel con Slick -->
+      <div class="col-md-9 mt-5">
+        <div id="carouselAtractivos" class="slick-carousel">
+          <?php
+            include_once("Connections/connectMySql.php");
+            $query = "SELECT atractivos_tb.atrac_id, atractivos_tb.atrac_name, atractivos_tb.atrac_status, municipios_tb.muni_name, atractivos_tb.atrac_cover_text, gallery_tb.gal_url
+                      FROM atractivos_tb
+                      JOIN gallery_tb ON atractivos_tb.atrac_id = gallery_tb.gal_dif
+                      JOIN municipios_tb ON atractivos_tb.atrac_muni_id = municipios_tb.muni_id
+                      WHERE gallery_tb.gal_type = 3 AND atractivos_tb.atrac_status = 1
+                      ORDER BY RAND()";
+            $result = $connectMySql->query($query);
+            while ($row = $result->fetch_assoc()):
+          ?>
+          <div class="card h-100 mx-2 rounded" style="background-color: #F4E8D9;">
+            <img src="administrador/<?php echo $row['gal_url']; ?>" class="card-img-top img-fixed" alt="<?php echo $row['atrac_name']; ?>">
+            <div class="card-body text-center">
+              <h5 class="fw-bold"><?php echo $row['atrac_name']; ?></h5>
+              <div class="d-flex justify-content-center align-items-center gap-2">
+                <img src="_images/SVG/bx_map.svg" alt="Ícono de mapa" style="width: 16px; height: 16px;">
+                <p class="card-text me-3"><?php echo $row['muni_name']; ?></p>
+              </div>
+              <p class="card-text m-0"><?php echo $row['atrac_cover_text']; ?></p>
+            </div>
+          </div>
+          <?php endwhile; ?>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 
@@ -246,7 +195,7 @@ $result = $connectMySql->query($query);
     <div class="carousel-inner">
       <?php foreach ($slides as $index => $municipio): ?>
       <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-        <img src="<?php echo $municipio['gal_url']; ?>" alt="<?php echo $municipio['muni_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom" style="object-fit: cover;">
+        <img src="administrador/<?php echo $municipio['gal_url']; ?>" alt="<?php echo $municipio['muni_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom" style="object-fit: cover;">
         <div class="banner-overlay"></div>
 
         <!-- Contenido centrado -->
@@ -281,27 +230,32 @@ $result = $connectMySql->query($query);
       <?php endforeach; ?>
     </div>
 
-    <!-- Flechitas -->
     <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
     </button>
   </div>
 </section>
 
 
-
+<!-- cintillo de logos -->
 <section>
-    <div class="logo-container">
-        <a href="#"><img src="_images\logos\rnt.svg" alt="Logotipo 1" class="logo"></a>
-        <a href="#"><img src="_images\logos\sichiturLogo.png" alt="Logotipo 2" class="logo"></a>
-        <a href="#"><img src="_images/logos/lchihuahua_para_ti.png" alt="Logotipo 3" class="logo"></a>
-        <a href="#"><img src="_images/logos/lchihuahua_para_ti.png" alt="Logotipo 4" class="logo"></a>
-        <a href="#"><img src="_images/logos/lchihuahua_para_ti.png" alt="Logotipo 5" class="logo"></a>
+    <div class="logo-container container-fluid">
+                  <?php
+            include_once("Connections/connectMySql.php");
+            $query = "SELECT gallery_tb.gal_url, gallery_tb.gal_type, gallery_tb.gal_dif
+                      FROM gallery_tb
+                      WHERE gallery_tb.gal_type = 6
+                      ORDER BY RAND()";
+            $result = $connectMySql->query($query);
+            while ($row = $result->fetch_assoc()):
+          ?>
+        <a href="#"><img src="administrador/<?php echo $row['gal_url']; ?>" class="logo"></a>
+        <?php endwhile; ?>
     </div>
 </section>
 
@@ -314,7 +268,39 @@ $result = $connectMySql->query($query);
 
 </footer>
 
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <!-- Slick Init Script -->
+<script>
+  $(document).ready(function(){
+    $('#carouselAtractivos').slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      infinite: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      dots: false,
+      arrows: false,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 2
+          }
+        }
+      ]
+    });
+  });
+</script>
+
 </body>
 </html>     

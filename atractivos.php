@@ -29,7 +29,7 @@ JOIN municipios_tb m ON a.atrac_muni_id = m.muni_id
 JOIN regiones_tb r ON a.atrac_reg_id = r.reg_id
 JOIN gallery_tb g ON a.atrac_id = g.gal_dif AND g.gal_type = 3
 LEFT JOIN gallery_tb icono ON icono.gal_dif = a.atrac_reg_id AND icono.gal_type = 5
-WHERE a.atrac_id = $atrac_id
+WHERE a.atrac_id = $atrac_id 
 LIMIT 1
 ";
 
@@ -43,12 +43,13 @@ $queryRelacionados = "
 SELECT 
     a.atrac_id,
     a.atrac_name,
+    a.atrac_status,
     m.muni_name,
     g.gal_url
 FROM atractivos_tb a
 JOIN municipios_tb m ON a.atrac_muni_id = m.muni_id
 JOIN gallery_tb g ON a.atrac_id = g.gal_dif AND g.gal_type = 3
-WHERE a.atrac_muni_id = $muni_id AND a.atrac_id != $atrac_id
+WHERE a.atrac_muni_id = $muni_id AND a.atrac_id != $atrac_id AND a.atrac_status = 1
 ";
 
 $resultRelacionados = $connectMySql->query($queryRelacionados);
@@ -93,7 +94,7 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
   background-image: url('_images/textura_chihuahua_es_para_ti.svg');
   background-repeat: repeat;
   background-size: auto;
-  opacity: 0.2; /* aquí controlas qué tan tenue se ve */
+  opacity: 0.2; /* qué tan tenue se ve */
   z-index: 0;
 }
 
@@ -137,7 +138,11 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
   object-fit: cover;
 }
 
-
+@media (max-width: 768px) {
+  .box-resp {
+  margin-top: 1em;
+}
+}
 
 </style>
 
@@ -148,7 +153,7 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
 <section class="position-relative fade-in">
     <div class="carousel-inner">
         <div>
-            <img src="<?php echo $atractivo['gal_url']; ?>" alt="<?php echo $atractivo['atrac_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom"
+            <img src="administrador/<?php echo $atractivo['gal_url']; ?>" alt="<?php echo $atractivo['atrac_name']; ?>" class="img-fluid w-100 zoom-in banner-img banner-img-zoom"
             style=" object-fit: cover;">>
             <div class="banner-overlay"></div>
 
@@ -159,7 +164,7 @@ $colorFondo = $coloresPorRegion[$atractivo['atrac_reg_id']] ?? '#5C7812'; // Col
                     </div>
 
                     <!-- Región -->
-                    <p class="text-white fs-6 fw-semibold"><?php echo $atractivo['reg_name']; ?></p>
+                    <p class="text-white fs-6 fw-semibold"> Región turística: <?php echo $atractivo['reg_name']; ?></p>
 
                     <!-- Título -->
                     <h2 class="fw-bold text-white display-2"><?php echo $atractivo['atrac_name']; ?></h2>
@@ -227,7 +232,7 @@ while ($row = $galeriaResult->fetch_assoc()) {
     <div class="carousel-inner imgfix">
       <?php foreach ($imagenes as $index => $url): ?>
         <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-          <img src="<?= $url ?>" class="d-block w-100 rounded" alt="Imagen <?= $index + 1 ?>">
+          <img src="administrador/<?= $url ?>" class="d-block w-100 rounded" alt="Imagen <?= $index + 1 ?>">
         </div>
       <?php endforeach; ?>
     </div>
@@ -247,28 +252,37 @@ while ($row = $galeriaResult->fetch_assoc()) {
 
     <!-- Datos del atractivo y Botón -->
 
-<div class="col-md-6 text-white p-4 rounded description-box" style="background-color: rgba(0, 0, 0, 0.28);">
+<div class="col-md-6 text-white p-4 rounded description-box box-resp" style="background-color: rgba(0, 0, 0, 0.28);">
     <p class="fw-bold mt-2">Horario:</p>
-    <p><?php echo $atractivo['atrac_horario']; ?></p>
+    <p><?php echo !empty($atractivo['atrac_horario']) ? $atractivo['atrac_horario'] : 'Sin horario'; ?></p>
+
     <p class="fw-bold mt-2">Dirección:</p>
-    <p><?php echo $atractivo['atrac_direcc']; ?></p>
+    <p><?php echo !empty($atractivo['atrac_direcc']) ? $atractivo['atrac_direcc'] : 'Sin dirección'; ?></p>
+
     <p class="fw-bold mt-2">Teléfono:</p>
-    <p><?php echo $atractivo['atrac_tel']; ?></p>
+    <p><?php echo !empty($atractivo['atrac_tel']) ? $atractivo['atrac_tel'] : 'No disponible'; ?></p>
+
     <p class="fw-bold mt-2">Precio de entrada:</p>
-    <p>$ <?php echo $atractivo['atrac_price']; ?> MXN</p>
+    <p><?php echo !empty($atractivo['atrac_price']) ? '$ ' . $atractivo['atrac_price'] . ' MXN' : 'Gratis'; ?></p>
 
     <!-- Redes -->
-    <a href="<?php echo $atractivo['atrac_soc_face']; ?>" target="_blank">
-        <img src="_images/logos/facebook.png" alt="Facebook" class="img-fluid" style="width: 40px;">
-    </a>
-    <a href="<?php echo $atractivo['atrac_soc_inst']; ?>" target="_blank">
-        <img src="_images/logos/instagram.png" alt="Instagram" class="img-fluid" style="width: 40px;">
-    </a>
+    <?php if (!empty($atractivo['atrac_soc_face'])): ?>
+        <a href="<?php echo $atractivo['atrac_soc_face']; ?>" target="_blank">
+            <img src="_images/logos/facebook.png" alt="Facebook" class="img-fluid" style="width: 40px;">
+        </a>
+    <?php endif; ?>
+
+    <?php if (!empty($atractivo['atrac_soc_inst'])): ?>
+        <a href="<?php echo $atractivo['atrac_soc_inst']; ?>" target="_blank">
+            <img src="_images/logos/instagram.png" alt="Instagram" class="img-fluid" style="width: 40px;">
+        </a>
+    <?php endif; ?>
 
     <br>
     <!-- Botón ubicación -->
     <a href="https://www.google.com/maps?q=<?php echo $atractivo['atrac_latitud']; ?>,<?php echo $atractivo['atrac_longitud']; ?>" target="_blank" class="btn btn-success mt-4">¿Cómo llegar?</a>
 </div>
+
 
 
 
@@ -281,8 +295,8 @@ while ($row = $galeriaResult->fetch_assoc()) {
   <div id="carouselAtractivos" class="slick-carousel mt-5">
 <?php while ($rel = $resultRelacionados->fetch_assoc()): ?>
   <div class="card h-100">
-    <img src="<?php echo $rel['gal_url']; ?>" class="card-img-top card-image-fixed" alt="<?php echo $rel['atrac_name']; ?>">
-    <div class="card-body text-grey text-center" style="">
+    <img src="administrador/<?php echo $rel['gal_url']; ?>" class="card-img-top card-image-fixed" alt="<?php echo $rel['atrac_name']; ?>">
+    <div class="card-body text-grey text-center" >
       <p><i class="bi bi-geo-alt"></i> <?php echo $rel['muni_name']; ?></p>
       <h5 class="fw-bold"><?php echo $rel['atrac_name']; ?></h5>
       <a href="atractivos.php?id=<?php echo $rel['atrac_id']; ?>" class="btn-ver-mas mt-2 btn-sm">Ver más</a>

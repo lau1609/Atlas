@@ -29,11 +29,8 @@ $(document).ready(function () {
     let markers = [];
 
     function initMap() {
-      const isMobile = window.innerWidth < 768; // Puedes ajustar este valor según tu diseño
-      const zoomLevel = isMobile ? 6 : 8;
-      map = L.map("map").setView([28.764337006856657, -105.69750154246044], zoomLevel);
-;
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png").addTo(map);
+      map = L.map("map").setView([28.764337006856657, -105.69750154246044], 8);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
       fetchDataMapa();
     }
 
@@ -62,28 +59,24 @@ $(document).ready(function () {
           data.forEach(atractivo => {
             const coords = [parseFloat(atractivo.atrac_latitud), parseFloat(atractivo.atrac_longitud)];
             const color = coloresPorRegion[atractivo.atrac_reg_id] || '#FFFFFF'; // color por defecto
-            const svgIcon = L.divIcon({
-                className: 'custom-marker',
-                // Icono del marcador en el mapa
-                html: `
-                    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="${color}">
-                        <path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5S13.4 11.5 12 11.5z"/>
-                    </svg> 
-                `,
-                iconSize: [72, 72],
-                iconAnchor: [18, 36], // centro inferior del ícono
-                popupAnchor: [0, -36]
+            
+            const customIcon = L.divIcon({
+                className: "custom-marker",
+                html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white;"></div>`,
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
             });
-            const marker = L.marker(coords, { icon: svgIcon  }).addTo(map);
 
-           marker.bindPopup(`
-                <div class='popup-bg' style="background-color: ${color};">
-                    <img src='administrador/${atractivo.gal_url}' alt='${atractivo.atrac_name}' style='width: 100%; height: auto; border-radius: 5px;'>
-                    <h3 class='mt-2'>${atractivo.atrac_name}</h3>
-                    <p>${atractivo.muni_name}</p>
-                    <a href='https://www.google.com/maps?q=${coords[0]},${coords[1]}' target='_blank' class='btn btn-light fw-bold mt-2 rounded'style='font-size: 1.2em ; color: ${color};'>¿Cómo llegar?</a>
-                    <a href='atractivos.php?id=${atractivo.atrac_id}' class='btn btn-light fw-bold mt-2 rounded'style='font-size: 1.2em ; color: ${color};' >Ver información</a>
-                </div>
+            const marker = L.marker(coords, { icon: customIcon }).addTo(map);
+
+            marker.bindPopup(`
+              <div class='info-box'>
+                <img src='administrador/${atractivo.gal_url}' alt='${atractivo.atrac_name}' style='width: 100%; height: auto;'>
+                <h3>${atractivo.atrac_name}</h3>
+                <p>${atractivo.muni_name}</p>
+                <a href='https://www.google.com/maps?q=${coords[0]},${coords[1]}' target='_blank' class='btn-green'>¿Cómo llegar?</a>
+                <a href='atractivos.php?id=${atractivo.atrac_id}' class='btn-green'>Ver información</a>
+              </div>
             `);
 
             markers.push(marker);
@@ -93,33 +86,15 @@ $(document).ready(function () {
     }
 
     document.getElementById("locationFilter")?.addEventListener("change", fetchDataMapa);
+    document.getElementById("regionFilter")?.addEventListener("change", fetchDataMapa);
     document.querySelectorAll('input[id^="tipo_"]').forEach(cb => cb.addEventListener("change", fetchDataMapa));
-        document.getElementById("resetFilters").addEventListener("click", () => {
+
+    document.getElementById("resetFilters")?.addEventListener("click", () => {
       document.getElementById("locationFilter").value = "all";
       document.getElementById("regionFilter").value = "all";
       document.querySelectorAll('input[id^="tipo_"]').forEach(cb => cb.checked = true);
       fetchDataMapa();
     });
-    document.getElementById("regionFilter").addEventListener("change", () => {
-    const regionId = document.getElementById("regionFilter").value;
-    const muniSelect = document.getElementById("locationFilter");
-
-    const defaultOption = `<option value="all">Todos los municipios</option>`;
-
-    const filtered = regionId === "all"
-        ? municipios
-        : municipios.filter(m => m.muni_reg_id == regionId);
-
-    let options = filtered.map(m => `<option value="${m.muni_id}">${m.muni_name}</option>`);
-
-    muniSelect.innerHTML = defaultOption + options.join('');
-    muniSelect.value = "all";
-
-    // 🟢 AGREGA ESTA LÍNEA AQUÍ DENTRO, justo aquí:
-    fetchDataMapa();
-});
-
-
 
     initMap();
   }
@@ -131,7 +106,7 @@ $(document).ready(function () {
     console.log("Inicializando tarjetas con filtros...");
 
     let currentPage = 1;
-    const itemsPerPage = 6;
+    const itemsPerPage = 9;
     let totalPages = 0;
 
     window.goToPage = function (page) {
@@ -161,9 +136,9 @@ $(document).ready(function () {
         container.innerHTML = "";
         paginated.forEach(atrac => {
           container.innerHTML += `
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 d-flex">
-              <div class="card shadow-sm h-300px d-flex flex-column">
-                <img src="administrador/${atrac.gal_url}">
+            <div class="col-6 col-md-4 col-lg-3 mb-1">
+              <div class="card shadow-sm">
+                <img src="administrador/${atrac.gal_url}" class="card-img-top" style="height: 270px; object-fit: cover;">
                 <div class="card-body text-center">
                   <h5 class="card-title">${atrac.atrac_name}</h5>
                   <p>${atrac.muni_name}</p>
@@ -217,6 +192,7 @@ $(document).ready(function () {
     }
 
     document.getElementById("locationFilter").addEventListener("change", fetchDataTarjetas);
+    document.getElementById("regionFilter").addEventListener("change", fetchDataTarjetas);
     document.querySelectorAll('input[id^="tipo_"]').forEach(cb => cb.addEventListener("change", fetchDataTarjetas));
     document.getElementById("resetFilters").addEventListener("click", () => {
       document.getElementById("locationFilter").value = "all";
@@ -224,106 +200,14 @@ $(document).ready(function () {
       document.querySelectorAll('input[id^="tipo_"]').forEach(cb => cb.checked = true);
       fetchDataTarjetas();
     });
-    document.getElementById("regionFilter").addEventListener("change", () => {
-    const regionId = document.getElementById("regionFilter").value;
-    const muniSelect = document.getElementById("locationFilter");
-
-    const defaultOption = `<option value="all">Todos los municipios</option>`;
-
-    const filtered = regionId === "all"
-        ? municipios
-        : municipios.filter(m => m.muni_reg_id == regionId);
-
-    let options = filtered.map(m => `<option value="${m.muni_id}">${m.muni_name}</option>`);
-
-    muniSelect.innerHTML = defaultOption + options.join('');
-    muniSelect.value = "all";
-
-    // 🟢 AGREGA ESTA LÍNEA AQUÍ DENTRO, justo aquí:
-    fetchDataTarjetas();
-});
-
 
     fetchDataTarjetas();
   }
 
-const sidebar = document.getElementById("sidebar");
-const toggleBtn = document.getElementById("toggleSidebar");
-
-toggleBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("collapsed");
-
-  // Ajusta clase al body para que el mapa se expanda automáticamente si lo necesitas
-  document.body.classList.toggle("sidebar-collapsed");
-
-  setTimeout(() => {
-    if (typeof map !== "undefined") {
-      map.invalidateSize();
-    }
-  }, 4500);
-
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-  const sidebar = document.getElementById("sidebar");
-  const toggleBtn = document.querySelector(".toggle-sidebar-btn");
-
-  // ✅ Función para colapsar el sidebar
-  function collapseSidebar() {
-    sidebar.classList.add("collapsed");
-    document.body.classList.add("sidebar-collapsed");
-  }
-
-  // ✅ Función para expandir el sidebar
-  function expandSidebar() {
-    sidebar.classList.remove("collapsed");
-    document.body.classList.remove("sidebar-collapsed");
-  }
-
-  // ✅ Al cargar, si es móvil, colapsar
-  if (window.innerWidth < 768) {
-    collapseSidebar();
-  }
-
-  // ✅ Evento de resize (por si se cambia el tamaño manualmente)
-  window.addEventListener("resize", () => {
-    if (window.innerWidth < 768) {
-      collapseSidebar();
-    } else {
-      expandSidebar();
-    }
-  });
-
-  // ✅ Toggle al presionar el botón
-  toggleBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // evitar conflicto con document click
-
-    if (sidebar.classList.contains("collapsed")) {
-      expandSidebar();
-    } else {
-      collapseSidebar();
-    }
-  });
-
-  // ✅ Click fuera del sidebar lo colapsa (solo en móvil)
-  document.addEventListener("click", (e) => {
-    const isMobile = window.innerWidth < 768;
-    const clickedInsideSidebar = sidebar.contains(e.target);
-    const clickedButton = toggleBtn.contains(e.target);
-
-    if (isMobile && !clickedInsideSidebar && !clickedButton) {
-      collapseSidebar();
-    }
-  });
-});
-
-
-});
-
 
 function verUbicacion(lat, lon) {
   window.open(`https://www.google.com/maps?q=${lat},${lon}`, "_blank");
-
 }
 
 
